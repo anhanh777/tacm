@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT English Pro - Revision Master</title>
+  <title>IT English Pro - Keyword Revision Master</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Thư viện hiệu ứng pháo hoa Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-    /* Hiệu ứng rung lắc khi trả lời sai */
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       20%, 60% { transform: translateX(-8px); }
@@ -23,7 +21,6 @@
       animation: shake 0.45s ease-in-out;
     }
 
-    /* Hiệu ứng nảy nhẹ khi chọn đúng */
     @keyframes bounce-short {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.02); }
@@ -32,7 +29,6 @@
       animation: bounce-short 0.35s ease-in-out;
     }
 
-    /* Style đáp án */
     .correct-btn {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
       color: white !important;
@@ -47,7 +43,6 @@
       box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.35) !important;
     }
 
-    /* Highlight đáp án đúng khi người dùng chọn sai */
     .highlight-correct {
       border: 2px dashed #059669 !important;
       background-color: #ecfdf5 !important;
@@ -58,22 +53,22 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen antialiased flex flex-col selection:bg-indigo-500 selection:text-white">
 
-  <!-- Header & Status Bar -->
+  <!-- Header -->
   <header class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-blue-900 text-white shadow-xl sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-indigo-300 font-black text-xl border border-white/20 shadow-inner">
-          <i class="fa-solid fa-laptop-code text-cyan-400"></i>
+        <div class="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-cyan-300 font-black text-xl border border-white/20 shadow-inner">
+          <i class="fa-solid fa-graduation-cap"></i>
         </div>
         <div>
           <h1 class="text-lg md:text-xl font-extrabold tracking-tight flex items-center gap-2">
-            IT English Revision <span class="text-xs bg-cyan-400/20 text-cyan-300 px-2 py-0.5 rounded-full border border-cyan-400/30">Pro Edition</span>
+            IT English Revision <span class="text-xs bg-amber-400 text-slate-900 font-black px-2 py-0.5 rounded-full">Keyword Mode</span>
           </h1>
-          <p class="text-xs text-indigo-200">Đầy đủ 148 câu • Trắc nghiệm thông minh & Hiển thị chuẩn</p>
+          <p class="text-xs text-indigo-200">Đầy đủ 148 câu • Phân tích từ mấu chốt & Dịch chuyên sâu</p>
         </div>
       </div>
 
-      <!-- Thống kê điểm & Tiến độ -->
+      <!-- Thống kê điểm -->
       <div class="flex items-center gap-3">
         <div class="bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 flex items-center gap-2 text-xs font-semibold">
           <i class="fa-solid fa-circle-check text-emerald-400"></i> Đúng: <span id="correctCounter" class="text-emerald-300 font-bold">0</span>
@@ -89,17 +84,17 @@
 
     <!-- Thanh tiến độ -->
     <div class="w-full bg-indigo-950/50 h-1.5">
-      <div id="topProgressBar" class="bg-gradient-to-r from-cyan-400 to-emerald-400 h-1.5 w-0 transition-all duration-300"></div>
+      <div id="topProgressBar" class="bg-gradient-to-r from-amber-400 to-emerald-400 h-1.5 w-0 transition-all duration-300"></div>
     </div>
 
     <!-- Navigation Tabs -->
     <nav class="bg-slate-900/60 backdrop-blur-md border-t border-white/10">
       <div class="max-w-6xl mx-auto px-4 flex space-x-2 overflow-x-auto text-sm py-1">
-        <button onclick="switchTab('part1')" id="tab-part1" class="tab-btn px-4 py-2.5 font-bold border-b-2 border-cyan-400 text-white flex items-center gap-2 transition rounded-t-lg">
-          <i class="fa-solid fa-cubes text-cyan-400"></i> Phần I: Thuật ngữ (48 câu)
+        <button onclick="switchTab('part1')" id="tab-part1" class="tab-btn px-4 py-2.5 font-bold border-b-2 border-amber-400 text-white flex items-center gap-2 transition rounded-t-lg">
+          <i class="fa-solid fa-tags text-amber-400"></i> Phần I: Thuật ngữ & Keywords (48 câu)
         </button>
         <button onclick="switchTab('part2')" id="tab-part2" class="tab-btn px-4 py-2.5 font-bold border-b-2 border-transparent text-indigo-200 hover:text-white flex items-center gap-2 transition rounded-t-lg">
-          <i class="fa-solid fa-spell-check text-indigo-400"></i> Phần II: Điền khuyết (50 câu)
+          <i class="fa-solid fa-key text-indigo-400"></i> Phần II: Điền khuyết & Từ gợi ý (50 câu)
         </button>
         <button onclick="switchTab('part3')" id="tab-part3" class="tab-btn px-4 py-2.5 font-bold border-b-2 border-transparent text-indigo-200 hover:text-white flex items-center gap-2 transition rounded-t-lg">
           <i class="fa-solid fa-toggle-on text-indigo-400"></i> Phần III: True / False (50 câu)
@@ -111,18 +106,18 @@
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 py-6 w-full flex-1">
 
-    <!-- PHẦN I: Trắc nghiệm 4 lựa chọn (Khi sai tự động hiển thị đáp án đúng) -->
+    <!-- PHẦN I -->
     <section id="section-part1" class="space-y-4">
       <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4">
         <div>
           <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
             <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-black">I</span>
-            Trắc nghiệm ghép thuật ngữ & Định nghĩa
+            Trắc nghiệm ghép thuật ngữ & Phân tích từ khóa mấu chốt
           </h2>
-          <p class="text-xs text-slate-500 mt-1">Chọn 1 trong 4 đáp án. Khi chọn sai, hệ thống sẽ <span class="font-bold text-emerald-600">tự động hiển thị và làm nổi bật đáp án đúng</span>.</p>
+          <p class="text-xs text-slate-500 mt-1">Hệ thống phân tích các từ <span class="font-bold text-amber-600">Keyword cốt lõi</span> trong định nghĩa giúp bạn nhớ ngay khi nhìn đề.</p>
         </div>
         <div class="flex gap-2">
-          <button onclick="renderPart1()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center gap-1.5">
+          <button onclick="renderPart1()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center gap-1.5">
             <i class="fa-solid fa-shuffle text-indigo-500"></i> Trộn câu hỏi
           </button>
         </div>
@@ -131,7 +126,7 @@
       <div id="part1Container" class="space-y-4"></div>
     </section>
 
-    <!-- PHẦN II: Điền khuyết (Có Trắc nghiệm 4 lựa chọn + Tùy chọn gõ từ + Tự hiện đáp án đúng khi sai) -->
+    <!-- PHẦN II -->
     <section id="section-part2" class="hidden space-y-4">
       <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4">
         <div>
@@ -139,14 +134,14 @@
             <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-black">II</span>
             Fill in the blank with suitable word(s)
           </h2>
-          <p class="text-xs text-slate-500 mt-1">Luyện chọn 4 phương án nhanh hoặc chuyển chế độ tự gõ. Có hỗ trợ dịch thuật ngữ và câu đầy đủ.</p>
+          <p class="text-xs text-slate-500 mt-1">Dịch trọn vẹn cả câu kèm <span class="font-bold text-indigo-600">từ dẫn đường (clue keywords)</span> giúp suy luận nhanh đáp án.</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <button onclick="toggleP2Mode()" id="p2ModeBtn" class="px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold rounded-lg transition flex items-center gap-1.5">
             <i class="fa-solid fa-keyboard"></i> Đổi sang chế độ tự gõ từ
           </button>
           <button onclick="toggleAllPart2Translations()" class="px-3.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-lg transition flex items-center gap-1.5">
-            <i class="fa-solid fa-language"></i> Bật/Tắt toàn bộ dịch
+            <i class="fa-solid fa-language"></i> Bật/Tắt toàn bộ dịch & Keywords
           </button>
         </div>
       </div>
@@ -154,14 +149,14 @@
       <div id="part2Container" class="space-y-4"></div>
     </section>
 
-    <!-- PHẦN III: True / False -->
+    <!-- PHẦN III -->
     <section id="section-part3" class="hidden space-y-4">
       <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
         <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
           <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-black">III</span>
           Decide if these statements are True (T) or False (F)
         </h2>
-        <p class="text-xs text-slate-500 mt-1">Kiểm tra tư duy kiến thức tổng quan. Bấm T/F để nhận phản hồi và giải thích lý do ngay lập tức.</p>
+        <p class="text-xs text-slate-500 mt-1">Giải thích cặn kẽ tại sao đúng hoặc sai, chỉ ra những từ bẫy trong câu hỏi.</p>
       </div>
 
       <div id="part3Container" class="space-y-4"></div>
@@ -174,164 +169,904 @@
   </footer>
 
   <script>
-    // DỮ LIỆU PHẦN 1: 48 câu Match (Kèm định nghĩa & bản dịch chuẩn)
+    // DỮ LIỆU PHẦN 1: 48 câu + Dịch chuẩn + Phân tích từ mấu chốt
     const part1Data = [
-      { id: 1, term: "A computer", def: "is an electronic machine which can accept data in a certain form, process the data, and give the results of the processing in a specified format as information.", transTerm: "Máy tính", transDef: "Là một cỗ máy điện tử có thể tiếp nhận dữ liệu ở một dạng nhất định, xử lý dữ liệu và đưa ra kết quả xử lý dưới định dạng thông tin chỉ định." },
-      { id: 2, term: "A clock", def: "controls the timing of signals in the computer.", transTerm: "Xung nhịp (Clock)", transDef: "Điều khiển thời gian và đồng bộ hóa các tín hiệu bên trong máy tính." },
-      { id: 3, term: "A cloud database", def: "is an automated or built-in database for such a virtualized environment.", transTerm: "Cơ sở dữ liệu đám mây", transDef: "Là một cơ sở dữ liệu được tích hợp sẵn hoặc tự động hóa dành riêng cho môi trường ảo hóa." },
-      { id: 4, term: "A gateway", def: "is an entrance to another network.", transTerm: "Cổng kết nối (Gateway)", transDef: "Là điểm đầu vào (cổng vào) để đi sang một mạng máy tính khác." },
-      { id: 5, term: "A hub", def: "channels incoming data maintains the bandwidth speed.", transTerm: "Bộ tập trung (Hub)", transDef: "Điều hướng dữ liệu truyền đến và duy trì tốc độ băng thông." },
-      { id: 6, term: "A modem", def: "modulates and demodulates the data into a digital or an analog signal.", transTerm: "Modem", transDef: "Điều chế và giải điều chế dữ liệu thành tín hiệu số hoặc tín hiệu tương tự (analog)." },
-      { id: 7, term: "A network topology", def: "is the layout of the interconnections of the nodes of a computer network which depends on the distance involved, the type of hardware used and the stability needed.", transTerm: "Cấu trúc liên kết mạng (Topology)", transDef: "Là sơ đồ bố trí các mối liên kết giữa các nút trong mạng máy tính, phụ thuộc vào khoảng cách, phần cứng sử dụng và độ ổn định yêu cầu." },
-      { id: 8, term: "Algorithm", def: "a predetermined set of instructions for solving a specific problem in a limited number of steps.", transTerm: "Thuật toán (Algorithm)", transDef: "Một tập hợp các chỉ dẫn được định sẵn nhằm giải quyết một vấn đề cụ thể trong một số bước hữu hạn." },
-      { id: 9, term: "Animations", def: "are made up of a series of independent pictures put together in sequence to look like moving pictures.", transTerm: "Hoạt ảnh (Animations)", transDef: "Được tạo thành từ một chuỗi các hình ảnh độc lập ghép nối theo thứ tự để trông giống như ảnh chuyển động." },
-      { id: 10, term: "Artificial", def: "made by humans, not natural.", transTerm: "Nhân tạo", transDef: "Do con người tạo ra, không phải tự nhiên." },
-      { id: 11, term: "Artificial intelligence", def: "is a broad area of computer science that makes machines seem like they have human intelligence.", transTerm: "Trí tuệ nhân tạo (AI)", transDef: "Là một lĩnh vực rộng lớn của khoa học máy tính giúp máy móc có vẻ sở hữu trí thông minh như con người." },
-      { id: 12, term: "Background", def: "the underlying colors and patterns of a web page.", transTerm: "Hình nền/Màu nền (Background)", transDef: "Màu sắc hoặc hoa văn nền nằm phía dưới của một trang web." },
-      { id: 13, term: "Blogging", def: "is a type of online journal in which the user can update daily, share, follow and post comments.", transTerm: "Viết blog (Blogging)", transDef: "Một dạng nhật ký trực tuyến nơi người dùng có thể cập nhật hàng ngày, chia sẻ, theo dõi và đăng bình luận." },
-      { id: 14, term: "Bot", def: "a computer program that works automatically, especially one that searches for and finds information on the Internet.", transTerm: "Bot (Chương trình tự động)", transDef: "Một chương trình máy tính hoạt động tự động, đặc biệt là loại tìm kiếm và thu thập thông tin trên Internet." },
-      { id: 15, term: "Browser hijacker", def: "is malicious software that changes a browser’s behavior, settings, or appearance without user consent.", transTerm: "Phần mềm chiếm quyền trình duyệt", transDef: "Là phần mềm độc hại tự ý thay đổi hành vi, cài đặt hoặc giao diện của trình duyệt mà không có sự đồng ý của người dùng." },
-      { id: 16, term: "Cache", def: "provides fast access for sections of a program and its data.", transTerm: "Bộ nhớ đệm (Cache)", transDef: "Cung cấp quyền truy cập tốc độ cao cho các đoạn chương trình và dữ liệu của nó." },
-      { id: 17, term: "Cascading Style Sheets (CSS)", def: "a mechanism for adding styles to web documents.", transTerm: "CSS", transDef: "Một cơ chế để định dạng và áp dụng kiểu dáng (style) cho tài liệu web." },
-      { id: 18, term: "Central processing unit (CPU)", def: "is considered the brain of the computer.", transTerm: "CPU", transDef: "Được xem như là bộ não điều khiển của máy tính." },
-      { id: 19, term: "Centralized Database", def: "The data is stored centrally and users from different locations can access this data.", transTerm: "Cơ sở dữ liệu tập trung", transDef: "Dữ liệu được lưu trữ tại một vị trí trung tâm duy nhất và người dùng từ nhiều nơi khác nhau có thể truy cập vào." },
-      { id: 20, term: "DBMS", def: "the software used in databases to store, organized and retrieve the data.", transTerm: "Hệ quản trị CSDL (DBMS)", transDef: "Phần mềm được sử dụng trong CSDL để lưu trữ, tổ chức sắp xếp và truy xuất dữ liệu." },
-      { id: 21, term: "End User Database", def: "a collaborative database that is designed specifically for the end-user as do the managers at various levels.", transTerm: "CSDL người dùng cuối", transDef: "Là một CSDL mang tính cộng tác được thiết kế dành riêng cho người dùng cuối và các nhà quản lý ở các cấp bậc." },
-      { id: 22, term: "Frames", def: "rectangular areas that allow the display of different pages in the same browser window.", transTerm: "Khung web (Frames)", transDef: "Các vùng hình chữ nhật cho phép hiển thị đồng thời các trang web khác nhau trên cùng một cửa sổ trình duyệt." },
-      { id: 23, term: "Hard drive", def: "magnetic device used to store information.", transTerm: "Ổ đĩa cứng (Hard drive)", transDef: "Thiết bị từ tính dùng để lưu trữ thông tin lâu dài." },
-      { id: 24, term: "Hardware", def: "is an electronic or mechanic part you can see or touch.", transTerm: "Phần cứng (Hardware)", transDef: "Bộ phận điện tử hoặc cơ khí mà bạn có thể nhìn thấy hoặc chạm vào được." },
-      { id: 25, term: "Hyperlinks", def: "are highlighted texts or pictures (buttons, image maps, etc.) that act as links to other pages.", transTerm: "Siêu liên kết (Hyperlinks)", transDef: "Các đoạn văn bản hoặc hình ảnh nổi bật đóng vai trò là đường dẫn (link) chuyển hướng sang các trang khác." },
-      { id: 26, term: "Input devices", def: "enable data to go into the computer’s memory.", transTerm: "Thiết bị đầu vào (Input devices)", transDef: "Cho phép nạp dữ liệu từ bên ngoài vào bộ nhớ của máy tính." },
-      { id: 27, term: "Instant message", def: "is a kind of service that allows people to send short message for free.", transTerm: "Tin nhắn tức thời (Instant message)", transDef: "Một loại dịch vụ cho phép mọi người gửi tin nhắn ngắn miễn phí qua mạng." },
-      { id: 28, term: "Java applets", def: "small programs that enable the creation of interactive files.", transTerm: "Java applets", transDef: "Các chương trình nhỏ hỗ trợ tạo ra các tệp tương tác trực tiếp trên trình duyệt." },
-      { id: 29, term: "Monitor", def: "displays the output from a computer on a screen.", transTerm: "Màn hình (Monitor)", transDef: "Hiển thị kết quả xuất ra từ máy tính lên trên màn hình hiển thị." },
-      { id: 30, term: "Nanotechnology", def: "the science of making devices from single atoms and molecules.", transTerm: "Công nghệ nano", transDef: "Ngành khoa học chế tạo các thiết bị từ các nguyên tử và phân tử đơn lẻ." },
-      { id: 31, term: "Operating system", def: "is the set of programs between the applications programs and the hardware.", transTerm: "Hệ điều hành (OS)", transDef: "Tập hợp các chương trình nằm ở lớp trung gian giữa các ứng dụng và phần cứng máy tính." },
-      { id: 32, term: "Password", def: "A secret word that you type into a computer before you use it.", transTerm: "Mật khẩu (Password)", transDef: "Một từ bí mật mà bạn phải gõ vào máy tính trước khi được phép sử dụng." },
-      { id: 33, term: "Peripherals", def: "are the physical units attached to the computer.", transTerm: "Thiết bị ngoại vi (Peripherals)", transDef: "Các thiết bị vật lý được gắn kết hoặc cắm ngoài vào thân máy tính." },
-      { id: 34, term: "Podcasting", def: "is a free service in which audio only broadcast released on the internet and users can download to listen.", transTerm: "Podcasting", transDef: "Dịch vụ phát các tệp âm thanh qua Internet để người dùng có thể tải về và nghe bất cứ lúc nào." },
-      { id: 35, term: "Ports", def: "sockets into which an external device may be connected.", transTerm: "Cổng cắm (Ports)", transDef: "Các ổ cắm giao tiếp cho phép kết nối một thiết bị ngoại vi gắn ngoài vào máy." },
-      { id: 36, term: "Processor", def: "controls all the operations in a computer.", transTerm: "Bộ vi xử lý (Processor)", transDef: "Điều khiển và quản lý mọi thao tác xử lý bên trong máy tính." },
-      { id: 37, term: "RAM", def: "holds data read or written to it by the processor.", transTerm: "RAM", transDef: "Bộ nhớ lưu trữ tạm thời các dữ liệu được bộ xử lý đọc hoặc ghi vào." },
-      { id: 38, term: "Ransomware", def: "is malware that employs encryption to hold a victim’s information at ransom. A user or organization’s critical data is encrypted so that they cannot access files, databases, or application.", transTerm: "Mã độc tống tiền (Ransomware)", transDef: "Mã độc mã hóa toàn bộ dữ liệu quan trọng của nạn nhân để đòi tiền chuộc, khiến họ không thể mở tệp, CSDL hay ứng dụng." },
-      { id: 39, term: "ROM", def: "hold instructions which are needed to start up the computer.", transTerm: "ROM", transDef: "Bộ nhớ chỉ đọc, chứa các tập lệnh thiết yếu cần thiết để khởi động máy tính." },
-      { id: 40, term: "Software", def: "a set of instructions or programs that tells the computer what to do.", transTerm: "Phần mềm (Software)", transDef: "Tập hợp các chỉ thị hoặc chương trình chỉ dẫn máy tính phải làm những gì." },
-      { id: 41, term: "Spyware", def: "software that enables a user to obtain convert information about another’s computer activities by transmitting data covertly from their hard drive.", transTerm: "Phần mềm gián điệp (Spyware)", transDef: "Phần mềm theo dõi lén lút hoạt động của máy tính khác bằng cách truyền dữ liệu ngầm từ ổ cứng nạn nhân." },
-      { id: 42, term: "Tags", def: "are placed around pieces of text to tell the web browser how to display text or pictures.", transTerm: "Thẻ HTML (Tags)", transDef: "Được đặt bao bọc quanh các đoạn văn bản để chỉ cho trình duyệt biết cách trình diễn chữ hoặc hình ảnh." },
-      { id: 43, term: "Teleworking", def: "the practice of working at home and communicating with the office by phone and computer.", transTerm: "Làm việc từ xa (Teleworking)", transDef: "Hình thức làm việc tại nhà và kết nối liên lạc với cơ quan thông qua máy tính và điện thoại." },
-      { id: 44, term: "Trojan", def: "is a type of malicious code or software that can take control of your computer.", transTerm: "Mã độc Trojan", transDef: "Một loại mã độc ngụy trang giúp kẻ tấn công có thể xâm nhập và giành quyền kiểm soát máy tính của bạn." },
-      { id: 45, term: "Video casting", def: "This is a type of communication in which videos are created and uploaded to a website like Youtube.", transTerm: "Phát video (Videocasting)", transDef: "Dạng truyền thông mà video được sản xuất và tải lên các nền tảng trang web như YouTube." },
-      { id: 46, term: "Video conferencing", def: "refers to a set of technologies that allow a person to make a video call to one or more people at the same time.", transTerm: "Hội nghị truyền hình", transDef: "Công nghệ cho phép một người thực hiện cuộc gọi hình ảnh cùng lúc đến nhiều người khác nhau." },
-      { id: 47, term: "Visitor map", def: "information about where the visitors to your site are from.", transTerm: "Bản đồ khách truy cập", transDef: "Thông tin và biểu đồ hiển thị nguồn gốc địa lý của những người truy cập vào trang web của bạn." },
-      { id: 48, term: "VOIP", def: "is a service to make telephone calls over the internet rather than through the traditional telephone or cell phone networks.", transTerm: "VOIP", transDef: "Dịch vụ gọi điện thoại qua giao thức mạng Internet thay vì qua đường dây điện thoại truyền thống." }
+      { 
+        id: 1, term: "A computer", 
+        def: "is an electronic machine which can accept data in a certain form, process the data, and give the results of the processing in a specified format as information.", 
+        transTerm: "Máy tính", 
+        transDef: "Là một cỗ máy điện tử có thể tiếp nhận dữ liệu ở một dạng nhất định, xử lý dữ liệu và đưa ra kết quả xử lý dưới định dạng thông tin chỉ định.",
+        keywords: [
+          { en: "electronic machine", vi: "cỗ máy điện tử" },
+          { en: "accept data ... process", vi: "tiếp nhận và xử lý dữ liệu" },
+          { en: "results ... as information", vi: "kết quả xuất ra dưới dạng thông tin" }
+        ]
+      },
+      { 
+        id: 2, term: "A clock", 
+        def: "controls the timing of signals in the computer.", 
+        transTerm: "Xung nhịp (Clock)", 
+        transDef: "Điều khiển thời gian và đồng bộ hóa các tín hiệu bên trong máy tính.",
+        keywords: [
+          { en: "controls the timing", vi: "kiểm soát định thời / đồng bộ nhịp" },
+          { en: "signals", vi: "các tín hiệu xung điện" }
+        ]
+      },
+      { 
+        id: 3, term: "A cloud database", 
+        def: "is an automated or built-in database for such a virtualized environment.", 
+        transTerm: "Cơ sở dữ liệu đám mây", 
+        transDef: "Là một cơ sở dữ liệu được tích hợp sẵn hoặc tự động hóa dành riêng cho môi trường ảo hóa.",
+        keywords: [
+          { en: "automated / built-in", vi: "tự động hóa / tích hợp sẵn" },
+          { en: "virtualized environment", vi: "môi trường ảo hóa (dấu hiệu nhận biết Cloud)" }
+        ]
+      },
+      { 
+        id: 4, term: "A gateway", 
+        def: "is an entrance to another network.", 
+        transTerm: "Cổng kết nối (Gateway)", 
+        transDef: "Là điểm đầu vào (cổng vào) để đi sang một mạng máy tính khác.",
+        keywords: [
+          { en: "entrance", vi: "lối vào / cổng đầu vào" },
+          { en: "another network", vi: "mạng máy tính khác" }
+        ]
+      },
+      { 
+        id: 5, term: "A hub", 
+        def: "channels incoming data maintains the bandwidth speed.", 
+        transTerm: "Bộ tập trung (Hub)", 
+        transDef: "Điều hướng dữ liệu truyền đến và duy trì tốc độ băng thông.",
+        keywords: [
+          { en: "channels incoming data", vi: "chuyển luồng dữ liệu truyền đến" },
+          { en: "bandwidth speed", vi: "tốc độ băng thông" }
+        ]
+      },
+      { 
+        id: 6, term: "A modem", 
+        def: "modulates and demodulates the data into a digital or an analog signal.", 
+        transTerm: "Modem", 
+        transDef: "Điều chế và giải điều chế dữ liệu thành tín hiệu số hoặc tín hiệu tương tự (analog).",
+        keywords: [
+          { en: "modulates and demodulates", vi: "điều chế (mo) và giải điều chế (dem)" },
+          { en: "digital or analog signal", vi: "tín hiệu số hoặc tín hiệu tương tự" }
+        ]
+      },
+      { 
+        id: 7, term: "A network topology", 
+        def: "is the layout of the interconnections of the nodes of a computer network which depends on the distance involved, the type of hardware used and the stability needed.", 
+        transTerm: "Cấu trúc liên kết mạng (Topology)", 
+        transDef: "Là sơ đồ bố trí các mối liên kết giữa các nút trong mạng máy tính...",
+        keywords: [
+          { en: "layout of interconnections", vi: "sơ đồ bố trí mối liên kết" },
+          { en: "nodes", vi: "các nút mạng / máy trạm" }
+        ]
+      },
+      { 
+        id: 8, term: "Algorithm", 
+        def: "a predetermined set of instructions for solving a specific problem in a limited number of steps.", 
+        transTerm: "Thuật toán (Algorithm)", 
+        transDef: "Một tập hợp các chỉ dẫn được định sẵn nhằm giải quyết một vấn đề cụ thể trong một số bước hữu hạn.",
+        keywords: [
+          { en: "predetermined set of instructions", vi: "tập hợp chỉ thị định trước" },
+          { en: "limited number of steps", vi: "số bước hữu hạn" }
+        ]
+      },
+      { 
+        id: 9, term: "Animations", 
+        def: "are made up of a series of independent pictures put together in sequence to look like moving pictures.", 
+        transTerm: "Hoạt ảnh (Animations)", 
+        transDef: "Được tạo thành từ một chuỗi các hình ảnh độc lập ghép nối theo thứ tự để trông giống như ảnh chuyển động.",
+        keywords: [
+          { en: "series of independent pictures", vi: "chuỗi ảnh độc lập" },
+          { en: "in sequence", vi: "theo trình tự liên tiếp" },
+          { en: "moving pictures", vi: "hình ảnh chuyển động" }
+        ]
+      },
+      { 
+        id: 10, term: "Artificial", 
+        def: "made by humans, not natural.", 
+        transTerm: "Nhân tạo", 
+        transDef: "Do con người tạo ra, không phải tự nhiên.",
+        keywords: [
+          { en: "made by humans", vi: "do con người tạo ra" },
+          { en: "not natural", vi: "không phải tự nhiên" }
+        ]
+      },
+      { 
+        id: 11, term: "Artificial intelligence", 
+        def: "is a broad area of computer science that makes machines seem like they have human intelligence.", 
+        transTerm: "Trí tuệ nhân tạo (AI)", 
+        transDef: "Là một lĩnh vực rộng lớn của khoa học máy tính giúp máy móc có vẻ sở hữu trí thông minh như con người.",
+        keywords: [
+          { en: "broad area of CS", vi: "lĩnh vực rộng lớn của KH máy tính" },
+          { en: "human intelligence", vi: "trí thông minh của con người" }
+        ]
+      },
+      { 
+        id: 12, term: "Background", 
+        def: "the underlying colors and patterns of a web page.", 
+        transTerm: "Màu nền/Ảnh nền (Background)", 
+        transDef: "Màu sắc hoặc hoa văn nền nằm phía dưới của một trang web.",
+        keywords: [
+          { en: "underlying colors and patterns", vi: "màu sắc và họa tiết nằm bên dưới" }
+        ]
+      },
+      { 
+        id: 13, term: "Blogging", 
+        def: "is a type of online journal in which the user can update daily, share, follow and post comments.", 
+        transTerm: "Viết blog (Blogging)", 
+        transDef: "Một dạng nhật ký trực tuyến nơi người dùng có thể cập nhật hàng ngày, chia sẻ, theo dõi và đăng bình luận.",
+        keywords: [
+          { en: "online journal", vi: "nhật ký trực tuyến" },
+          { en: "update daily", vi: "cập nhật hàng ngày" }
+        ]
+      },
+      { 
+        id: 14, term: "Bot", 
+        def: "a computer program that works automatically, especially one that searches for and finds information on the Internet.", 
+        transTerm: "Bot (Chương trình tự động)", 
+        transDef: "Một chương trình máy tính hoạt động tự động, đặc biệt là loại tìm kiếm và thu thập thông tin trên Internet.",
+        keywords: [
+          { en: "works automatically", vi: "hoạt động tự động" },
+          { en: "searches and finds information", vi: "tìm kiếm và thu thập thông tin" }
+        ]
+      },
+      { 
+        id: 15, term: "Browser hijacker", 
+        def: "is malicious software that changes a browser’s behavior, settings, or appearance without user consent.", 
+        transTerm: "Phần mềm chiếm quyền trình duyệt", 
+        transDef: "Là phần mềm độc hại tự ý thay đổi hành vi, cài đặt hoặc giao diện của trình duyệt mà không có sự đồng ý của người dùng.",
+        keywords: [
+          { en: "changes browser's settings", vi: "thay đổi cài đặt trình duyệt trái phép" },
+          { en: "without user consent", vi: "không có sự đồng ý của người dùng" }
+        ]
+      },
+      { 
+        id: 16, term: "Cache", 
+        def: "provides fast access for sections of a program and its data.", 
+        transTerm: "Bộ nhớ đệm (Cache)", 
+        transDef: "Cung cấp quyền truy cập tốc độ cao cho các đoạn chương trình và dữ liệu của nó.",
+        keywords: [
+          { en: "provides fast access", vi: "cung cấp truy cập cực nhanh" },
+          { en: "sections of a program", vi: "các phân đoạn của chương trình" }
+        ]
+      },
+      { 
+        id: 17, term: "Cascading Style Sheets (CSS)", 
+        def: "a mechanism for adding styles to web documents.", 
+        transTerm: "CSS", 
+        transDef: "Một cơ chế để định dạng và áp dụng kiểu dáng (style) cho tài liệu web.",
+        keywords: [
+          { en: "mechanism", vi: "cơ chế / phương thức" },
+          { en: "adding styles", vi: "thêm phong cách, định dạng kiểu dáng" }
+        ]
+      },
+      { 
+        id: 18, term: "Central processing unit (CPU)", 
+        def: "is considered the brain of the computer.", 
+        transTerm: "CPU", 
+        transDef: "Được xem như là bộ não điều khiển của máy tính.",
+        keywords: [
+          { en: "brain of the computer", vi: "bộ não của máy tính" }
+        ]
+      },
+      { 
+        id: 19, term: "Centralized Database", 
+        def: "The data is stored centrally and users from different locations can access this data.", 
+        transTerm: "Cơ sở dữ liệu tập trung", 
+        transDef: "Dữ liệu được lưu trữ tại một vị trí trung tâm duy nhất và người dùng từ nhiều nơi khác nhau có thể truy cập vào.",
+        keywords: [
+          { en: "stored centrally", vi: "được lưu trữ tập trung ở một nơi" },
+          { en: "different locations", vi: "các địa điểm khác nhau truy cập vào" }
+        ]
+      },
+      { 
+        id: 20, term: "DBMS", 
+        def: "the software used in databases to store, organized and retrieve the data.", 
+        transTerm: "Hệ quản trị CSDL (DBMS)", 
+        transDef: "Phần mềm được sử dụng trong CSDL để lưu trữ, tổ chức sắp xếp và truy xuất dữ liệu.",
+        keywords: [
+          { en: "software used in databases", vi: "phần mềm dùng cho cơ sở dữ liệu" },
+          { en: "store, organize, retrieve", vi: "lưu trữ, tổ chức, truy xuất dữ liệu" }
+        ]
+      },
+      { 
+        id: 21, term: "End User Database", 
+        def: "a collaborative database that is designed specifically for the end-user as do the managers at various levels.", 
+        transTerm: "CSDL người dùng cuối", 
+        transDef: "Là một CSDL mang tính cộng tác được thiết kế dành riêng cho người dùng cuối và các nhà quản lý ở các cấp bậc.",
+        keywords: [
+          { en: "collaborative database", vi: "CSDL mang tính tương tác / cộng tác" },
+          { en: "specifically for end-user", vi: "đặc biệt dành cho người dùng cuối" }
+        ]
+      },
+      { 
+        id: 22, term: "Frames", 
+        def: "rectangular areas that allow the display of different pages in the same browser window.", 
+        transTerm: "Khung web (Frames)", 
+        transDef: "Các vùng hình chữ nhật cho phép hiển thị đồng thời các trang web khác nhau trên cùng một cửa sổ trình duyệt.",
+        keywords: [
+          { en: "rectangular areas", vi: "vùng ô hình chữ nhật" },
+          { en: "different pages in same window", vi: "nhiều trang trong cùng 1 cửa sổ" }
+        ]
+      },
+      { 
+        id: 23, term: "Hard drive", 
+        def: "magnetic device used to store information.", 
+        transTerm: "Ổ đĩa cứng (Hard drive)", 
+        transDef: "Thiết bị từ tính dùng để lưu trữ thông tin lâu dài.",
+        keywords: [
+          { en: "magnetic device", vi: "thiết bị lưu trữ từ tính" },
+          { en: "store information", vi: "lưu giữ dữ liệu/thông tin" }
+        ]
+      },
+      { 
+        id: 24, term: "Hardware", 
+        def: "is an electronic or mechanic part you can see or touch.", 
+        transTerm: "Phần cứng (Hardware)", 
+        transDef: "Bộ phận điện tử hoặc cơ khí mà bạn có thể nhìn thấy hoặc chạm vào được.",
+        keywords: [
+          { en: "electronic / mechanic part", vi: "linh kiện điện tử hoặc cơ khí" },
+          { en: "see or touch", vi: "nhìn thấy hoặc sờ chạm được (tính vật lý)" }
+        ]
+      },
+      { 
+        id: 25, term: "Hyperlinks", 
+        def: "are highlighted texts or pictures (buttons, image maps, etc.) that act as links to other pages.", 
+        transTerm: "Siêu liên kết (Hyperlinks)", 
+        transDef: "Các đoạn văn bản hoặc hình ảnh nổi bật đóng vai trò là đường dẫn sang các trang khác.",
+        keywords: [
+          { en: "highlighted texts or pictures", vi: "chữ hoặc ảnh được làm nổi bật" },
+          { en: "links to other pages", vi: "liên kết nhảy sang trang khác" }
+        ]
+      },
+      { 
+        id: 26, term: "Input devices", 
+        def: "enable data to go into the computer’s memory.", 
+        transTerm: "Thiết bị đầu vào (Input devices)", 
+        transDef: "Cho phép nạp dữ liệu từ bên ngoài vào bộ nhớ của máy tính.",
+        keywords: [
+          { en: "go into", vi: "đi vào bên trong (nạp vào)" },
+          { en: "computer's memory", vi: "bộ nhớ của máy tính" }
+        ]
+      },
+      { 
+        id: 27, term: "Instant message", 
+        def: "is a kind of service that allows people to send short message for free.", 
+        transTerm: "Tin nhắn tức thời (Instant message)", 
+        transDef: "Một loại dịch vụ cho phép mọi người gửi tin nhắn ngắn miễn phí qua mạng.",
+        keywords: [
+          { en: "send short message", vi: "gửi tin nhắn ngắn" },
+          { en: "for free", vi: "miễn phí" }
+        ]
+      },
+      { 
+        id: 28, term: "Java applets", 
+        def: "small programs that enable the creation of interactive files.", 
+        transTerm: "Java applets", 
+        transDef: "Các chương trình nhỏ hỗ trợ tạo ra các tệp tương tác trực tiếp trên trình duyệt.",
+        keywords: [
+          { en: "small programs", vi: "các chương trình nhỏ" },
+          { en: "interactive files", vi: "tệp tin có tính tương tác" }
+        ]
+      },
+      { 
+        id: 29, term: "Monitor", 
+        def: "displays the output from a computer on a screen.", 
+        transTerm: "Màn hình (Monitor)", 
+        transDef: "Hiển thị kết quả xuất ra từ máy tính lên trên màn hình hiển thị.",
+        keywords: [
+          { en: "displays the output", vi: "hiển thị kết quả đầu ra" },
+          { en: "on a screen", vi: "trên bề mặt màn hình" }
+        ]
+      },
+      { 
+        id: 30, term: "Nanotechnology", 
+        def: "the science of making devices from single atoms and molecules.", 
+        transTerm: "Công nghệ nano", 
+        transDef: "Ngành khoa học chế tạo các thiết bị từ các nguyên tử và phân tử đơn lẻ.",
+        keywords: [
+          { en: "science of making devices", vi: "khoa học chế tạo thiết bị" },
+          { en: "single atoms and molecules", vi: "từng nguyên tử và phân tử đơn lẻ" }
+        ]
+      },
+      { 
+        id: 31, term: "Operating system", 
+        def: "is the set of programs between the applications programs and the hardware.", 
+        transTerm: "Hệ điều hành (OS)", 
+        transDef: "Tập hợp các chương trình nằm ở lớp trung gian giữa các ứng dụng và phần cứng máy tính.",
+        keywords: [
+          { en: "set of programs", vi: "tập hợp các chương trình" },
+          { en: "between applications and hardware", vi: "nằm giữa ứng dụng và phần cứng" }
+        ]
+      },
+      { 
+        id: 32, term: "Password", 
+        def: "A secret word that you type into a computer before you use it.", 
+        transTerm: "Mật khẩu (Password)", 
+        transDef: "Một từ bí mật mà bạn phải gõ vào máy tính trước khi được phép sử dụng.",
+        keywords: [
+          { en: "secret word", vi: "từ ngữ bí mật" },
+          { en: "before you use it", vi: "trước khi bạn được phép đăng nhập dùng" }
+        ]
+      },
+      { 
+        id: 33, term: "Peripherals", 
+        def: "are the physical units attached to the computer.", 
+        transTerm: "Thiết bị ngoại vi (Peripherals)", 
+        transDef: "Các thiết bị vật lý được gắn kết hoặc cắm ngoài vào thân máy tính.",
+        keywords: [
+          { en: "physical units", vi: "các thiết bị/bộ phận vật lý" },
+          { en: "attached to the computer", vi: "được gắn/kết nối vào máy tính" }
+        ]
+      },
+      { 
+        id: 34, term: "Podcasting", 
+        def: "is a free service in which audio only broadcast released on the internet and users can download to listen.", 
+        transTerm: "Podcasting", 
+        transDef: "Dịch vụ phát các tệp âm thanh qua Internet để người dùng có thể tải về và nghe bất cứ lúc nào.",
+        keywords: [
+          { en: "audio only broadcast", vi: "chương trình chỉ phát riêng âm thanh" },
+          { en: "download to listen", vi: "tải về để nghe" }
+        ]
+      },
+      { 
+        id: 35, term: "Ports", 
+        def: "sockets into which an external device may be connected.", 
+        transTerm: "Cổng cắm (Ports)", 
+        transDef: "Các ổ cắm giao tiếp cho phép kết nối một thiết bị ngoại vi gắn ngoài vào máy.",
+        keywords: [
+          { en: "sockets", vi: "các khe cắm / ổ cắm" },
+          { en: "external device connected", vi: "kết nối thiết bị gắn ngoài" }
+        ]
+      },
+      { 
+        id: 36, term: "Processor", 
+        def: "controls all the operations in a computer.", 
+        transTerm: "Bộ vi xử lý (Processor)", 
+        transDef: "Điều khiển và quản lý mọi thao tác xử lý bên trong máy tính.",
+        keywords: [
+          { en: "controls all operations", vi: "kiểm soát mọi hoạt động thực thi" }
+        ]
+      },
+      { 
+        id: 37, term: "RAM", 
+        def: "holds data read or written to it by the processor.", 
+        transTerm: "RAM", 
+        transDef: "Bộ nhớ lưu trữ tạm thời các dữ liệu được bộ xử lý đọc hoặc ghi vào.",
+        keywords: [
+          { en: "holds data", vi: "chứa tạm dữ liệu" },
+          { en: "read or written", vi: "được đọc hoặc ghi" }
+        ]
+      },
+      { 
+        id: 38, term: "Ransomware", 
+        def: "is malware that employs encryption to hold a victim’s information at ransom. A user or organization’s critical data is encrypted so that they cannot access files, databases, or application.", 
+        transTerm: "Mã độc tống tiền (Ransomware)", 
+        transDef: "Mã độc dùng mã hóa để giữ dữ liệu làm con tin đòi tiền chuộc...",
+        keywords: [
+          { en: "employs encryption", vi: "sử dụng thuật toán mã hóa khóa dữ liệu" },
+          { en: "ransom", vi: "tiền chuộc" },
+          { en: "cannot access files", vi: "nạn nhân bị tước quyền mở tệp" }
+        ]
+      },
+      { 
+        id: 39, term: "ROM", 
+        def: "hold instructions which are needed to start up the computer.", 
+        transTerm: "ROM", 
+        transDef: "Bộ nhớ chỉ đọc, chứa các tập lệnh thiết yếu cần thiết để khởi động máy tính.",
+        keywords: [
+          { en: "hold instructions", vi: "lưu trữ các tập lệnh chỉ dẫn" },
+          { en: "start up the computer", vi: "khởi động máy tính (BIOS/Firmware)" }
+        ]
+      },
+      { 
+        id: 40, term: "Software", 
+        def: "a set of instructions or programs that tells the computer what to do.", 
+        transTerm: "Phần mềm (Software)", 
+        transDef: "Tập hợp các chỉ thị hoặc chương trình chỉ dẫn máy tính phải làm những gì.",
+        keywords: [
+          { en: "set of instructions", vi: "tập hợp các chỉ thị lệnh" },
+          { en: "tells the computer what to do", vi: "chỉ huy máy tính làm gì" }
+        ]
+      },
+      { 
+        id: 41, term: "Spyware", 
+        def: "software that enables a user to obtain convert information about another’s computer activities by transmitting data covertly from their hard drive.", 
+        transTerm: "Phần mềm gián điệp (Spyware)", 
+        transDef: "Phần mềm theo dõi lén lút hoạt động của máy tính khác bằng cách truyền ngầm dữ liệu từ ổ cứng nạn nhân.",
+        keywords: [
+          { en: "covertly", vi: "lén lút, bí mật, ngầm" },
+          { en: "transmitting data from hard drive", vi: "tuồn dữ liệu từ ổ cứng ra ngoài" }
+        ]
+      },
+      { 
+        id: 42, term: "Tags", 
+        def: "are placed around pieces of text to tell the web browser how to display text or pictures.", 
+        transTerm: "Thẻ HTML (Tags)", 
+        transDef: "Được đặt bao bọc quanh các đoạn văn bản để chỉ cho trình duyệt biết cách hiển thị chữ hoặc ảnh.",
+        keywords: [
+          { en: "placed around pieces of text", vi: "đặt bao bọc quanh văn bản (<tag>text</tag>)" },
+          { en: "how to display", vi: "cách thức trình bày hiển thị" }
+        ]
+      },
+      { 
+        id: 43, term: "Teleworking", 
+        def: "the practice of working at home and communicating with the office by phone and computer.", 
+        transTerm: "Làm việc từ xa (Teleworking)", 
+        transDef: "Hình thức làm việc tại nhà và kết nối liên lạc với cơ quan thông qua máy tính và điện thoại.",
+        keywords: [
+          { en: "working at home", vi: "làm việc tại nhà (remote)" },
+          { en: "communicating with office", vi: "kết nối trao đổi với văn phòng" }
+        ]
+      },
+      { 
+        id: 44, term: "Trojan", 
+        def: "is a type of malicious code or software that can take control of your computer.", 
+        transTerm: "Mã độc Trojan", 
+        transDef: "Một loại mã độc ngụy trang giúp kẻ tấn công có thể xâm nhập và giành quyền kiểm soát máy tính.",
+        keywords: [
+          { en: "malicious code", vi: "mã độc hại" },
+          { en: "take control", vi: "chiếm quyền kiểm soát máy móc" }
+        ]
+      },
+      { 
+        id: 45, term: "Video casting", 
+        def: "This is a type of communication in which videos are created and uploaded to a website like Youtube.", 
+        transTerm: "Phát video (Videocasting)", 
+        transDef: "Dạng truyền thông mà video được sản xuất và tải lên các nền tảng trang web như YouTube.",
+        keywords: [
+          { en: "videos created and uploaded", vi: "video được tạo và tải lên" },
+          { en: "website like Youtube", vi: "nền tảng như YouTube" }
+        ]
+      },
+      { 
+        id: 46, term: "Video conferencing", 
+        def: "refers to a set of technologies that allow a person to make a video call to one or more people at the same time.", 
+        transTerm: "Hội nghị truyền hình", 
+        transDef: "Công nghệ cho phép một người thực hiện cuộc gọi hình ảnh cùng lúc đến nhiều người.",
+        keywords: [
+          { en: "video call", vi: "cuộc gọi kèm hình ảnh" },
+          { en: "at the same time", vi: "đồng thời cùng một lúc nhiều người" }
+        ]
+      },
+      { 
+        id: 47, term: "Visitor map", 
+        def: "information about where the visitors to your site are from.", 
+        transTerm: "Bản đồ khách truy cập", 
+        transDef: "Thông tin và biểu đồ hiển thị nguồn gốc địa lý của những người truy cập vào trang web của bạn.",
+        keywords: [
+          { en: "where visitors are from", vi: "khách truy cập đến từ khu vực nào" }
+        ]
+      },
+      { 
+        id: 48, term: "VOIP", 
+        def: "is a service to make telephone calls over the internet rather than through the traditional telephone or cell phone networks.", 
+        transTerm: "VOIP", 
+        transDef: "Dịch vụ gọi điện thoại qua giao thức mạng Internet thay vì qua đường dây điện thoại truyền thống.",
+        keywords: [
+          { en: "telephone calls over internet", vi: "gọi điện thoại chạy trên mạng Internet" },
+          { en: "rather than traditional", vi: "thay vì dùng mạng viễn thông truyền thống" }
+        ]
+      }
     ];
 
-    // DỮ LIỆU PHẦN 2: 50 câu điền từ + Bản dịch câu tiếng Việt chuẩn xác
+    // DỮ LIỆU PHẦN 2: 50 câu + Dịch câu + Phân tích từ mấu chốt dẫn đường
     const part2Data = [
-      { id: 1, pre: "", ans: "Wearable computers", post: " are designed to be worn on the body or integrated into the user’s clothing.", trans: "Các loại máy tính đeo trên người được thiết kế để đeo trên cơ thể hoặc tích hợp trực tiếp vào trang phục của người dùng." },
-      { id: 2, pre: "", ans: "Adware", post: " is software that displays unwanted advertisements on your computer.", trans: "Adware là phần mềm chuyên hiển thị các nội dung quảng cáo không mong muốn trên máy tính của bạn." },
-      { id: 3, pre: "", ans: "Ransomware", post: " is a type of malware that prevents you from using your computer or accessing specific files on your computer unless a ransom is paid.", trans: "Mã độc tống tiền (Ransomware) là loại mã độc ngăn cản bạn dùng máy tính hoặc chặn mở tệp cho đến khi bạn chịu trả tiền chuộc." },
-      { id: 4, pre: "An operating system has three main functions: manage the computer's resources, such as the central processing unit, ", ans: "memory", post: ", disk drives, and printers, establish a user interface, and execute and provide services for applications software.", trans: "Hệ điều hành có 3 chức năng chính: quản lý tài nguyên phần cứng máy tính (như CPU, bộ nhớ, ổ đĩa, máy in), thiết lập giao diện người dùng và thực thi cung cấp dịch vụ cho các phần mềm ứng dụng." },
-      { id: 5, pre: "Electronic communication is fast, ", ans: "cost-effective", post: " and convenient, but these attributes contain inherent disadvantages.", trans: "Giao tiếp điện tử rất nhanh chóng, tiết kiệm chi phí và tiện lợi, nhưng các đặc tính này cũng tiềm ẩn những bất cập cố hữu." },
-      { id: 6, pre: "", ans: "Output devices", post: " enable us to extract the finish product from the system.", trans: "Các thiết bị xuất (Output devices) cho phép chúng ta trích xuất và nhận sản phẩm hoàn chỉnh từ hệ thống máy tính." },
-      { id: 7, pre: "", ans: "Ransomware", post: " is a type of malware that prevents you from using your computer or accessing specific files on your computer unless a ransom is paid.", trans: "Ransomware là phần mềm độc hại chặn quyền truy cập máy tính hoặc dữ liệu nếu nạn nhân không trả tiền chuộc." },
-      { id: 8, pre: "", ans: "Backing up", post: " means copying data to another place so that you don’t lose it.", trans: "Sao lưu (Backing up) có nghĩa là sao chép dữ liệu sang một nơi lưu trữ khác để bạn không bị mất dữ liệu." },
-      { id: 9, pre: "", ans: "Software", post: " is a set of instructions, called a program, which tells the computer what to do.", trans: "Phần mềm là một tập hợp các chỉ thị (được gọi là chương trình) điều khiển máy tính biết phải thực hiện những công việc gì." },
-      { id: 10, pre: "A ", ans: "database", post: " can manage any type of data, including text, numbers, images, sound and video and hyperlinks (links to websites).", trans: "Một cơ sở dữ liệu có thể quản lý mọi loại dữ liệu, bao gồm văn bản, số liệu, hình ảnh, âm thanh, video và các siêu liên kết." },
-      { id: 11, pre: "A ", ans: "LAN", post: " connects computers over a relatively short distance, allowing them to share data, files, and resources.", trans: "Mạng cục bộ (LAN) kết nối các máy tính trong phạm vi khoảng cách tương đối ngắn, giúp chia sẻ tệp tin và tài nguyên." },
-      { id: 12, pre: "A ", ans: "distributed", post: " database in which various parts of a database are located in different physical locations along with databases replicated and distributed between different points in a network can be imagined.", trans: "Có thể hình dung CSDL phân tán là loại CSDL mà các phần dữ liệu được đặt tại nhiều vị trí địa lý khác nhau và được đồng bộ giữa các điểm mạng." },
-      { id: 13, pre: "A network topology is the layout of the interconnections of the ", ans: "nodes", post: " of a computer network.", trans: "Cấu trúc liên kết mạng là sơ đồ bố trí các đường kết nối giữa các nút (nodes) của mạng máy tính." },
-      { id: 14, pre: "A record about an employee might consist of several ", ans: "fields", post: " which give their name, address, phone number, date of birth, salary and length of employment.", trans: "Một bản ghi (record) về nhân viên có thể gồm nhiều trường dữ liệu (fields) thể hiện họ tên, địa chỉ, số điện thoại, ngày sinh, tiền lương và thâm niên." },
-      { id: 15, pre: "Artificial Intelligence is slowly making progress, but it could soon ", ans: "evolve", post: " into a new trend in technology.", trans: "Trí tuệ nhân tạo đang tiến bộ dần dần, nhưng nó có thể sớm tiến hóa phát triển thành một xu hướng công nghệ mới." },
-      { id: 16, pre: "But in the modern world, telecommunications mainly means transferring information across the Internet, via modem, phone lines or ", ans: "wireless", post: " networks.", trans: "Trong thế giới hiện đại, viễn thông chủ yếu là việc truyền tải thông tin qua mạng Internet thông qua modem, đường dây điện thoại hoặc mạng không dây." },
-      { id: 17, pre: "By using ", ans: "email", post: ", one can send a message to another person through a mail immediately.", trans: "Bằng việc sử dụng thư điện tử (email), người ta có thể gửi thư đến một người khác gần như ngay tức thì." },
-      { id: 18, pre: "Don’t use common words or numbers as ", ans: "passwords", post: ", such as birthdays or names of your children.", trans: "Đừng sử dụng các từ hoặc con số quá phổ biến để làm mật khẩu, chẳng hạn như ngày sinh nhật hoặc tên của con cái bạn." },
-      { id: 19, pre: "Due to the advancement of electronic media, business managers can effortlessly manage ", ans: "operations", post: " transversely the world.", trans: "Nhờ sự phát triển của truyền thông điện tử, các nhà quản lý doanh nghiệp có thể dễ dàng điều hành các hoạt động kinh doanh trên toàn thế giới." },
-      { id: 20, pre: "Electronic communication can be classified into different types like messaging, voice call, e-mail, ", ans: "videoconferencing", post: ", etc.", trans: "Truyền thông điện tử có thể được phân loại thành nhiều hình thức như nhắn tin, gọi thoại, email, hội nghị truyền hình, v.v." },
-      { id: 21, pre: "Hackers try to trick email recipients into believing that a message is genuine and relevant – a request from their bank or a note from a co-worker, for example – so that they click on a link or open an ", ans: "attachment", post: ".", trans: "Tin tặc cố lừa người nhận tin rằng email là thật để dụ họ nhấn vào liên kết lạ hoặc mở tệp đính kèm độc hại." },
-      { id: 22, pre: "Heterogeneous and homogenous are the two kinds of distribution ", ans: "databases", post: ".", trans: "Không đồng nhất (Heterogeneous) và đồng nhất (Homogenous) là hai kiểu phân loại của hệ thống cơ sở dữ liệu phân tán." },
-      { id: 23, pre: "HTML is a language that is all about the ", ans: "formatting", post: " of your information, not what the actual data is.", trans: "HTML là ngôn ngữ tập trung vào việc định dạng cách hiển thị thông tin, chứ không phải bản chất nội dung thực của dữ liệu." },
-      { id: 24, pre: "If you want to inject something special into your web pages, you can use Adobe Flash to include interactive ", ans: "animations", post: " and streaming audio.", trans: "Nếu muốn trang web thêm sinh động, bạn có thể dùng Adobe Flash để chèn hoạt ảnh tương tác và phát âm thanh trực tiếp." },
-      { id: 25, pre: "If you want to share ", ans: "news", post: " with people, you can use RSS feeds and provide readers with a link to the feed.", trans: "Nếu bạn muốn chia sẻ tin tức mới với mọi người, bạn có thể sử dụng nguồn cấp dữ liệu RSS và gửi liên kết cho độc giả." },
-      { id: 26, pre: "In ", ans: "bus topology", post: ", all nodes are connected to a common medium, call backbone, as it happens with Christmas lights.", trans: "Trong cấu trúc liên kết mạng hình trục (bus topology), mọi nút mạng đều cắm chung vào một đường dây trục xương sống duy nhất." },
-      { id: 27, pre: "In a ", ans: "bus", post: " network all nodes are connected to a common medium, call backbone, as it happens with Christmas lights.", trans: "Trong mạng hình bus, toàn bộ các máy được nối vào một dây dẫn chung gọi là đường trục, tương tự như chuỗi đèn nháy trang trí." },
-      { id: 28, pre: "In basic terms, AI is a ", ans: "broad", post: " area of computer science that makes machines seem like they have human intelligence.", trans: "Nói một cách cơ bản, AI là một lĩnh vực rộng lớn của khoa học máy tính giúp máy móc mô phỏng lại trí tuệ con người." },
-      { id: 29, pre: "In recent years, TV and radio broadcasting has been revolutionized by developments in satellite and ", ans: "cable", post: " transmission.", trans: "Những năm gần đây, phát thanh truyền hình đã được cách mạng hóa bởi các bước phát triển vượt bậc trong truyền dẫn vệ tinh và truyền hình cáp." },
-      { id: 30, pre: "In the ideal smart home, appliances and electronic devices work in ", ans: "harmony", post: " to keep the house secure.", trans: "Trong một ngôi nhà thông minh lý tưởng, các thiết bị điện tử sẽ vận hành đồng bộ, nhịp nhàng nhằm bảo vệ an ninh cho gia đình." },
-      { id: 31, pre: "In the near future we may have ", ans: "robotic", post: " pets, with video camera eyes and microphone ears, linked by radio to the family computer.", trans: "Trong tương lai gần, chúng ta có thể sẽ có thú cưng robot với mắt là camera và tai là micro, kết nối không dây tới máy tính." },
-      { id: 32, pre: "Instant messaging is a service, like SMS, that ", ans: "enables", post: " people to send short messages using their mobiles phones (or computers).", trans: "Nhắn tin tức thời là dịch vụ tương tự SMS, cho phép người dùng gửi tin nhắn văn bản ngắn qua điện thoại hoặc máy tính." },
-      { id: 33, pre: "Like human, a ", ans: "machine", post: " retains information and becomes smarter over time.", trans: "Tương tự con người, một cỗ máy thông minh có thể ghi nhớ thông tin và ngày càng trở nên thông minh hơn theo thời gian." },
-      { id: 34, pre: "Netflix and Google have already announced that they would be reducing video streaming quality in Europe for a month from high definition (HD) to standard definition (SD) to prevent network ", ans: "congestion", post: " and collapse.", trans: "Netflix và Google từng thông báo hạ chất lượng video tại châu Âu từ HD xuống SD để ngăn ngừa hiện tượng nghẽn mạng và sập đường truyền." },
-      { id: 35, pre: "Neural networks help solve the problem of providing higher revenue at ", ans: "lower", post: " costs.", trans: "Mạng nơ-ron giúp giải quyết bài toán nâng cao doanh thu với chi phí thấp hơn đáng kể." },
-      { id: 36, pre: "Neural networks, also called ", ans: "artificial", post: " neural networks, are ways of achieving deep learning.", trans: "Mạng nơ-ron, hay còn được gọi là mạng nơ-ron nhân tạo (ANN), là giải pháp nền tảng để hiện thực hóa học sâu (deep learning)." },
-      { id: 37, pre: "No ", ans: "unauthorized", post: " user can access the information.", trans: "Không một người dùng nào không được phân quyền (unauthorized) có thể truy cập vào thông tin này." },
-      { id: 38, pre: "Nowadays, data are actually stored in a public cloud, a hybrid cloud or a private cloud, also known as a ", ans: "virtualized", post: " environment.", trans: "Ngày nay, dữ liệu được lưu trên đám mây công cộng, đám mây lai hay đám mây riêng, vốn được gọi chung là môi trường ảo hóa." },
-      { id: 39, pre: "On the other hand, ", ans: "networks", post: " may be difficult to set up and may be insecure as computer hackers can send viruses or computer worms to the net computer.", trans: "Mặt khác, các hệ thống mạng có thể khá phức tạp để cài đặt và dễ mất an toàn khi hacker phát tán virus hoặc sâu máy tính." },
-      { id: 40, pre: "Thanks to advances in processing speeds, ", ans: "computers", post: " can actually make sense of all this information more quickly.", trans: "Nhờ sự bứt phá về tốc độ vi xử lý, các dòng máy tính ngày nay có thể phân tích và hiểu khối dữ liệu này với tốc độ vượt bậc." },
-      { id: 41, pre: "Thanks to books and movies, each generation has formed its own fantasy of a world ruled or at least served by ", ans: "robots", post: ".", trans: "Qua sách báo và phim ảnh, mỗi thế hệ đều xây dựng trí tưởng tượng về một thế giới được phục vụ bởi robot." },
-      { id: 42, pre: "The ", ans: "analysis", post: " of large-size, unstructured information can be done very efficiently on several cloud virtual servers.", trans: "Việc phân tích dữ liệu phi cấu trúc dung lượng lớn có thể được thực hiện hết sức tối ưu trên nhiều máy chủ ảo đám mây." },
-      { id: 43, pre: "The ", ans: "flow", post: " of information in a network is controlled by communications protocols, which define the formats and rules that computers must follow when talking to one another.", trans: "Luồng truyền tải thông tin trong mạng được điều phối bởi các giao thức truyền thông, vốn quy định các quy tắc trao đổi dữ liệu." },
-      { id: 44, pre: "The best database packages also include network facilities, which can make business more ", ans: "productive", post: ".", trans: "Những gói phần mềm CSDL tốt nhất còn tích hợp tiện ích mạng, giúp hoạt động kinh doanh của doanh nghiệp đạt năng suất cao hơn." },
-      { id: 45, pre: "The role of the operating system is to ", ans: "communicate", post: " directly with the hardware.", trans: "Vai trò cốt lõi của hệ điều hành là giao tiếp và chỉ thị trực tiếp với các thiết bị phần cứng." },
-      { id: 46, pre: "There are three basic hardware sections: the central processing unit (CPU), main memory and ", ans: "peripherals", post: ".", trans: "Có ba bộ phận phần cứng cơ bản: bộ vi xử lý trung tâm (CPU), bộ nhớ chính (main memory) và các thiết bị ngoại vi." },
-      { id: 47, pre: "There is no central hub that holds all the data, and communication is sent in one direction around the ", ans: "ring", post: " through the use of a token.", trans: "Không có thiết bị trung tâm nào giữ dữ liệu, thông tin được luân chuyển tuần tự theo một chiều duy nhất qua mạng vòng nhờ thẻ bài (token)." },
-      { id: 48, pre: "When you ask Siri or Cortana where the closest gas station is, it’s really translating your voice into text, feeding it to a ", ans: "search engine", post: ", and read the answer back in human syntax.", trans: "Khi bạn hỏi Siri vị trí cây xăng gần nhất, trợ lý ảo sẽ chuyển giọng nói thành văn bản, nạp vào công cụ tìm kiếm và đọc lại kết quả cho bạn." },
-      { id: 49, pre: "While people are mostly using home WiFi, they would still use their mobile phones for voice ", ans: "calls", post: ", and this is the area that MNOs need to keep a close eye on.", trans: "Dù mọi người chủ yếu kết nối WiFi ở nhà, họ vẫn sử dụng điện thoại để gọi thoại, và đây là mảng các nhà mạng viễn thông cần theo dõi sát." },
-      { id: 50, pre: "With the potential congestion of fixed broadband service, there is a chance that devices will fall back on ", ans: "cellular", post: " networks, and this will cause a significant surge of mobile data traffic.", trans: "Trước nguy cơ nghẽn cáp quang băng rộng cố định, người dùng có xu hướng quay lại dùng mạng 4G/5G di động, gây bùng nổ lưu lượng." }
+      { 
+        id: 1, pre: "", ans: "Wearable computers", post: " are designed to be worn on the body or integrated into the user’s clothing.", 
+        trans: "Các loại máy tính đeo trên người được thiết kế để đeo trên cơ thể hoặc tích hợp trực tiếp vào trang phục của người dùng.",
+        clues: [
+          { word: "worn on the body", note: "được mang/đeo trên người" },
+          { word: "integrated into clothing", note: "may tích hợp vào quần áo" }
+        ]
+      },
+      { 
+        id: 2, pre: "", ans: "Adware", post: " is software that displays unwanted advertisements on your computer.", 
+        trans: "Adware là phần mềm chuyên hiển thị các nội dung quảng cáo không mong muốn trên máy tính của bạn.",
+        clues: [
+          { word: "displays unwanted advertisements", note: "hiển thị quảng cáo phiền toái (Ad = Advertisement)" }
+        ]
+      },
+      { 
+        id: 3, pre: "", ans: "Ransomware", post: " is a type of malware that prevents you from using your computer or accessing specific files on your computer unless a ransom is paid.", 
+        trans: "Mã độc tống tiền (Ransomware) là loại mã độc ngăn cản bạn dùng máy tính hoặc chặn mở tệp cho đến khi bạn chịu trả tiền chuộc.",
+        clues: [
+          { word: "prevents accessing files", note: "chặn quyền mở tài liệu" },
+          { word: "ransom is paid", note: "đến khi nộp tiền chuộc" }
+        ]
+      },
+      { 
+        id: 4, pre: "An operating system has three main functions: manage the computer's resources, such as the central processing unit, ", ans: "memory", post: ", disk drives, and printers, establish a user interface, and execute and provide services for applications software.", 
+        trans: "Hệ điều hành có 3 chức năng chính: quản lý tài nguyên phần cứng (như CPU, bộ nhớ, ổ đĩa, máy in)...",
+        clues: [
+          { word: "computer's resources", note: "tài nguyên máy tính (CPU, memory, disk drives)" }
+        ]
+      },
+      { 
+        id: 5, pre: "Electronic communication is fast, ", ans: "cost-effective", post: " and convenient, but these attributes contain inherent disadvantages.", 
+        trans: "Giao tiếp điện tử rất nhanh chóng, tiết kiệm chi phí và tiện lợi, nhưng các đặc tính này cũng tiềm ẩn những bất cập.",
+        clues: [
+          { word: "fast, ... and convenient", note: "bộ ba đặc điểm: nhanh, tiết kiệm (cost-effective) và tiện lợi" }
+        ]
+      },
+      { 
+        id: 6, pre: "", ans: "Output devices", post: " enable us to extract the finish product from the system.", 
+        trans: "Các thiết bị xuất (Output devices) cho phép chúng ta trích xuất và nhận sản phẩm hoàn chỉnh từ hệ thống.",
+        clues: [
+          { word: "extract the finish product", note: "trích xuất thành phẩm/kết quả đầu ra" }
+        ]
+      },
+      { 
+        id: 7, pre: "", ans: "Ransomware", post: " is a type of malware that prevents you from using your computer or accessing specific files on your computer unless a ransom is paid.", 
+        trans: "Ransomware là phần mềm độc hại chặn quyền truy cập máy tính hoặc dữ liệu nếu nạn nhân không trả tiền chuộc.",
+        clues: [
+          { word: "ransom is paid", note: "tiền chuộc được chi trả" }
+        ]
+      },
+      { 
+        id: 8, pre: "", ans: "Backing up", post: " means copying data to another place so that you don’t lose it.", 
+        trans: "Sao lưu (Backing up) có nghĩa là sao chép dữ liệu sang một nơi lưu trữ khác để bạn không bị mất dữ liệu.",
+        clues: [
+          { word: "copying data to another place", note: "nhân bản sao chép dữ liệu sang ổ khác" },
+          { word: "don't lose it", note: "tránh bị mất mát" }
+        ]
+      },
+      { 
+        id: 9, pre: "", ans: "Software", post: " is a set of instructions, called a program, which tells the computer what to do.", 
+        trans: "Phần mềm là một tập hợp các chỉ thị (gọi là chương trình) điều khiển máy tính biết phải làm gì.",
+        clues: [
+          { word: "set of instructions", note: "tập hợp các chỉ thị" },
+          { word: "called a program", note: "được gọi là chương trình" }
+        ]
+      },
+      { 
+        id: 10, pre: "A ", ans: "database", post: " can manage any type of data, including text, numbers, images, sound and video and hyperlinks (links to websites).", 
+        trans: "Một cơ sở dữ liệu có thể quản lý mọi loại dữ liệu, bao gồm văn bản, số, hình ảnh, âm thanh, video và siêu liên kết.",
+        clues: [
+          { word: "manage any type of data", note: "quản lý mọi thể loại dữ liệu có cấu trúc" }
+        ]
+      },
+      { 
+        id: 11, pre: "A ", ans: "LAN", post: " connects computers over a relatively short distance, allowing them to share data, files, and resources.", 
+        trans: "Mạng cục bộ (LAN) kết nối các máy tính trong phạm vi khoảng cách tương đối ngắn...",
+        clues: [
+          { word: "relatively short distance", note: "khoảng cách tương đối ngắn (phòng, trường học)" }
+        ]
+      },
+      { 
+        id: 12, pre: "A ", ans: "distributed", post: " database in which various parts of a database are located in different physical locations along with databases replicated and distributed between different points in a network can be imagined.", 
+        trans: "CSDL phân tán là loại CSDL mà các phần dữ liệu được đặt tại nhiều vị trí địa lý khác nhau...",
+        clues: [
+          { word: "different physical locations", note: "vị trí vật lý khác nhau" },
+          { word: "replicated and distributed", note: "nhân bản và phân tán khắp nơi" }
+        ]
+      },
+      { 
+        id: 13, pre: "A network topology is the layout of the interconnections of the ", ans: "nodes", post: " of a computer network.", 
+        trans: "Cấu trúc liên kết mạng là sơ đồ bố trí các đường kết nối giữa các nút (nodes) của mạng máy tính.",
+        clues: [
+          { word: "interconnections of the nodes", note: "sự liên kết giữa các node/máy trạm" }
+        ]
+      },
+      { 
+        id: 14, pre: "A record about an employee might consist of several ", ans: "fields", post: " which give their name, address, phone number, date of birth, salary and length of employment.", 
+        trans: "Một bản ghi nhân viên bao gồm nhiều trường (fields) như tên, địa chỉ, sđt, lương...",
+        clues: [
+          { word: "record consists of fields", note: "1 bản ghi (hàng) gồm nhiều trường (cột dữ liệu)" }
+        ]
+      },
+      { 
+        id: 15, pre: "Artificial Intelligence is slowly making progress, but it could soon ", ans: "evolve", post: " into a new trend in technology.", 
+        trans: "Trí tuệ nhân tạo đang tiến bộ dần dần, nhưng nó có thể sớm tiến hóa phát triển thành xu hướng mới.",
+        clues: [
+          { word: "evolve into", note: "tiến hóa, phát triển chuyển mình thành" }
+        ]
+      },
+      { 
+        id: 16, pre: "But in the modern world, telecommunications mainly means transferring information across the Internet, via modem, phone lines or ", ans: "wireless", post: " networks.", 
+        trans: "Trong thế giới hiện đại, viễn thông chủ yếu là truyền tải thông tin qua mạng qua modem, dây điện thoại hoặc mạng không dây.",
+        clues: [
+          { word: "wireless networks", note: "mạng không dây (WiFi/Sóng di động)" }
+        ]
+      },
+      { 
+        id: 17, pre: "By using ", ans: "email", post: ", one can send a message to another person through a mail immediately.", 
+        trans: "Bằng việc sử dụng thư điện tử (email), người ta có thể gửi thư đến một người khác gần như ngay tức thì.",
+        clues: [
+          { word: "through a mail immediately", note: "gửi qua hòm thư điện tử lập tức" }
+        ]
+      },
+      { 
+        id: 18, pre: "Don’t use common words or numbers as ", ans: "passwords", post: ", such as birthdays or names of your children.", 
+        trans: "Đừng sử dụng các từ hoặc con số quá phổ biến để làm mật khẩu, chẳng hạn ngày sinh nhật hay tên con cái.",
+        clues: [
+          { word: "birthdays or names of children", note: "ngày sinh, tên riêng -> không nên đặt làm password" }
+        ]
+      },
+      { 
+        id: 19, pre: "Due to the advancement of electronic media, business managers can effortlessly manage ", ans: "operations", post: " transversely the world.", 
+        trans: "Nhờ sự phát triển của truyền thông điện tử, các nhà quản lý doanh nghiệp có thể dễ dàng điều hành các hoạt động trên toàn cầu.",
+        clues: [
+          { word: "manage operations", note: "vận hành, quản lý các hoạt động doanh nghiệp" }
+        ]
+      },
+      { 
+        id: 20, pre: "Electronic communication can be classified into different types like messaging, voice call, e-mail, ", ans: "videoconferencing", post: ", etc.", 
+        trans: "Truyền thông điện tử được phân thành các loại như nhắn tin, cuộc gọi, email, hội nghị truyền hình...",
+        clues: [
+          { word: "messaging, voice call, e-mail", note: "danh mục các phương tiện liên lạc số" }
+        ]
+      },
+      { 
+        id: 21, pre: "Hackers try to trick email recipients into believing that a message is genuine and relevant – a request from their bank or a note from a co-worker, for example – so that they click on a link or open an ", ans: "attachment", post: ".", 
+        trans: "Tin tặc cố lừa người nhận tin rằng email là thật để dụ họ nhấn vào link hoặc mở tệp đính kèm độc hại.",
+        clues: [
+          { word: "click on link or open ...", note: "mở tệp đính kèm nguy hiểm (attachment)" }
+        ]
+      },
+      { 
+        id: 22, pre: "Heterogeneous and homogenous are the two kinds of distribution ", ans: "databases", post: ".", 
+        trans: "Không đồng nhất (Heterogeneous) và đồng nhất (Homogenous) là hai kiểu phân loại của CSDL phân tán.",
+        clues: [
+          { word: "Heterogeneous and homogenous", note: "hai trạng thái cấu trúc của Distributed Databases" }
+        ]
+      },
+      { 
+        id: 23, pre: "HTML is a language that is all about the ", ans: "formatting", post: " of your information, not what the actual data is.", 
+        trans: "HTML là ngôn ngữ tập trung vào việc định dạng cách hiển thị thông tin, chứ không phải bản chất dữ liệu.",
+        clues: [
+          { word: "formatting / presentation", note: "định dạng bề ngoài hiển thị" }
+        ]
+      },
+      { 
+        id: 24, pre: "If you want to inject something special into your web pages, you can use Adobe Flash to include interactive ", ans: "animations", post: " and streaming audio.", 
+        trans: "Nếu muốn trang web thêm sinh động, bạn có thể dùng Adobe Flash để chèn hoạt ảnh tương tác và âm thanh trực tiếp.",
+        clues: [
+          { word: "Adobe Flash", note: "công cụ huyền thoại tạo hoạt ảnh (animations)" }
+        ]
+      },
+      { 
+        id: 25, pre: "If you want to share ", ans: "news", post: " with people, you can use RSS feeds and provide readers with a link to the feed.", 
+        trans: "Nếu bạn muốn chia sẻ tin tức mới với mọi người, bạn có thể sử dụng nguồn cấp dữ liệu RSS.",
+        clues: [
+          { word: "RSS feeds", note: "kênh tự động đồng bộ hóa tin tức (news/feeds)" }
+        ]
+      },
+      { 
+        id: 26, pre: "In ", ans: "bus topology", post: ", all nodes are connected to a common medium, call backbone, as it happens with Christmas lights.", 
+        trans: "Trong cấu trúc liên kết mạng hình trục (bus topology), mọi nút mạng đều cắm chung vào một đường dây trục xương sống...",
+        clues: [
+          { word: "common medium (backbone)", note: "dây trục chung xương sống" },
+          { word: "Christmas lights", note: "chuỗi dây đèn nháy Giáng Sinh (hình tượng của Bus topology)" }
+        ]
+      },
+      { 
+        id: 27, pre: "In a ", ans: "bus", post: " network all nodes are connected to a common medium, call backbone, as it happens with Christmas lights.", 
+        trans: "Trong mạng hình bus, toàn bộ các máy được nối vào một dây dẫn chung gọi là đường trục.",
+        clues: [
+          { word: "connected to a common medium", note: "nối vào đường cáp đơn trục chính" }
+        ]
+      },
+      { 
+        id: 28, pre: "In basic terms, AI is a ", ans: "broad", post: " area of computer science that makes machines seem like they have human intelligence.", 
+        trans: "Nói một cách cơ bản, AI là một lĩnh vực rộng lớn của khoa học máy tính...",
+        clues: [
+          { word: "broad area", note: "lĩnh vực rộng lớn bao quát" }
+        ]
+      },
+      { 
+        id: 29, pre: "In recent years, TV and radio broadcasting has been revolutionized by developments in satellite and ", ans: "cable", post: " transmission.", 
+        trans: "Phát thanh truyền hình đã được cách mạng hóa bởi truyền dẫn vệ tinh và truyền hình cáp.",
+        clues: [
+          { word: "satellite and cable", note: "truyền dẫn vệ tinh và cáp tín hiệu" }
+        ]
+      },
+      { 
+        id: 30, pre: "In the ideal smart home, appliances and electronic devices work in ", ans: "harmony", post: " to keep the house secure.", 
+        trans: "Trong một ngôi nhà thông minh lý tưởng, các thiết bị điện tử sẽ vận hành đồng bộ, nhịp nhàng...",
+        clues: [
+          { word: "work in harmony", note: "hoạt động hài hòa, phối hợp nhịp nhàng" }
+        ]
+      },
+      { 
+        id: 31, pre: "In the near future we may have ", ans: "robotic", post: " pets, with video camera eyes and microphone ears, linked by radio to the family computer.", 
+        trans: "Trong tương lai gần, chúng ta có thể sẽ có thú cưng robot với mắt là camera và tai là micro...",
+        clues: [
+          { word: "camera eyes, microphone ears", note: "mắt máy quay, tai micro -> thú cưng người máy (robotic pets)" }
+        ]
+      },
+      { 
+        id: 32, pre: "Instant messaging is a service, like SMS, that ", ans: "enables", post: " people to send short messages using their mobiles phones (or computers).", 
+        trans: "Nhắn tin tức thời là dịch vụ tương tự SMS, cho phép người dùng gửi tin nhắn ngắn...",
+        clues: [
+          { word: "enables people to send", note: "cho phép/giúp đỡ ai làm điều gì" }
+        ]
+      },
+      { 
+        id: 33, pre: "Like human, a ", ans: "machine", post: " retains information and becomes smarter over time.", 
+        trans: "Tương tự con người, một cỗ máy thông minh có thể ghi nhớ thông tin và ngày càng thông minh hơn...",
+        clues: [
+          { word: "becomes smarter over time", note: "thông minh hơn qua thời gian (Machine Learning)" }
+        ]
+      },
+      { 
+        id: 34, pre: "Netflix and Google have already announced that they would be reducing video streaming quality in Europe for a month from high definition (HD) to standard definition (SD) to prevent network ", ans: "congestion", post: " and collapse.", 
+        trans: "Netflix và Google từng thông báo hạ chất lượng video tại châu Âu để ngăn ngừa hiện tượng nghẽn mạng...",
+        clues: [
+          { word: "prevent network congestion", note: "ngăn chặn tình trạng tắc nghẽn lưu lượng mạng" }
+        ]
+      },
+      { 
+        id: 35, pre: "Neural networks help solve the problem of providing higher revenue at ", ans: "lower", post: " costs.", 
+        trans: "Mạng nơ-ron giúp giải quyết bài toán nâng cao doanh thu với chi phí thấp hơn.",
+        clues: [
+          { word: "higher revenue at lower costs", note: "tăng doanh thu nhưng hạ giá thành chi phí" }
+        ]
+      },
+      { 
+        id: 36, pre: "Neural networks, also called ", ans: "artificial", post: " neural networks, are ways of achieving deep learning.", 
+        trans: "Mạng nơ-ron, hay còn được gọi là mạng nơ-ron nhân tạo (ANN)...",
+        clues: [
+          { word: "artificial neural networks (ANN)", note: "mạng nơ-ron nhân tạo" }
+        ]
+      },
+      { 
+        id: 37, pre: "No ", ans: "unauthorized", post: " user can access the information.", 
+        trans: "Không một người dùng nào không được phân quyền có thể truy cập vào thông tin này.",
+        clues: [
+          { word: "unauthorized user", note: "người dùng trái phép / không được cấp quyền" }
+        ]
+      },
+      { 
+        id: 38, pre: "Nowadays, data are actually stored in a public cloud, a hybrid cloud or a private cloud, also known as a ", ans: "virtualized", post: " environment.", 
+        trans: "Ngày nay, dữ liệu được lưu trên cloud, vốn được gọi chung là môi trường ảo hóa.",
+        clues: [
+          { word: "cloud ... virtualized environment", note: "đám mây là môi trường ảo hóa" }
+        ]
+      },
+      { 
+        id: 39, pre: "On the other hand, ", ans: "networks", post: " may be difficult to set up and may be insecure as computer hackers can send viruses or computer worms to the net computer.", 
+        trans: "Mặt khác, các hệ thống mạng có thể khó cài đặt và dễ mất an toàn khi hacker phát tán virus...",
+        clues: [
+          { word: "difficult to set up", note: "thiết lập hạ tầng mạng phức tạp" },
+          { word: "hackers send worms", note: "nguy cơ bảo mật mạng" }
+        ]
+      },
+      { 
+        id: 40, pre: "Thanks to advances in processing speeds, ", ans: "computers", post: " can actually make sense of all this information more quickly.", 
+        trans: "Nhờ sự bứt phá về tốc độ vi xử lý, các máy tính ngày nay có thể phân tích thông tin nhanh hơn.",
+        clues: [
+          { word: "advances in processing speeds", note: "tốc độ xung nhịp CPU tăng vọt" }
+        ]
+      },
+      { 
+        id: 41, pre: "Thanks to books and movies, each generation has formed its own fantasy of a world ruled or at least served by ", ans: "robots", post: ".", 
+        trans: "Qua sách báo và phim ảnh, mỗi thế hệ đều tưởng tượng về một thế giới phục vụ bởi robot.",
+        clues: [
+          { word: "ruled or served by robots", note: "thống trị hoặc phục vụ bởi người máy" }
+        ]
+      },
+      { 
+        id: 42, pre: "The ", ans: "analysis", post: " of large-size, unstructured information can be done very efficiently on several cloud virtual servers.", 
+        trans: "Việc phân tích dữ liệu phi cấu trúc dung lượng lớn có thể được thực hiện tối ưu trên đám mây.",
+        clues: [
+          { word: "analysis of unstructured data", note: "phân tích dữ liệu phi cấu trúc (Big Data)" }
+        ]
+      },
+      { 
+        id: 43, pre: "The ", ans: "flow", post: " of information in a network is controlled by communications protocols, which define the formats and rules that computers must follow when talking to one another.", 
+        trans: "Luồng truyền tải thông tin trong mạng được điều phối bởi các giao thức truyền thông...",
+        clues: [
+          { word: "flow of information", note: "luồng lưu chuyển dữ liệu" },
+          { word: "controlled by protocols", note: "điều phối bởi giao thức mạng" }
+        ]
+      },
+      { 
+        id: 44, pre: "The best database packages also include network facilities, which can make business more ", ans: "productive", post: ".", 
+        trans: "Những gói phần mềm CSDL tốt nhất còn tích hợp tiện ích mạng, giúp doanh nghiệp đạt năng suất cao hơn.",
+        clues: [
+          { word: "make business more productive", note: "nâng cao năng suất công việc" }
+        ]
+      },
+      { 
+        id: 45, pre: "The role of the operating system is to ", ans: "communicate", post: " directly with the hardware.", 
+        trans: "Vai trò cốt lõi của hệ điều hành là giao tiếp trực tiếp với các thiết bị phần cứng.",
+        clues: [
+          { word: "communicate directly with hardware", note: "giao tiếp và điều khiển trực tiếp phần cứng" }
+        ]
+      },
+      { 
+        id: 46, pre: "There are three basic hardware sections: the central processing unit (CPU), main memory and ", ans: "peripherals", post: ".", 
+        trans: "Có ba bộ phận phần cứng cơ bản: CPU, bộ nhớ chính và các thiết bị ngoại vi.",
+        clues: [
+          { word: "three basic hardware sections", note: "3 phần: CPU, Main Memory, Peripherals (thiết bị ngoại vi)" }
+        ]
+      },
+      { 
+        id: 47, pre: "There is no central hub that holds all the data, and communication is sent in one direction around the ", ans: "ring", post: " through the use of a token.", 
+        trans: "Không có thiết bị trung tâm nào giữ dữ liệu, thông tin được luân chuyển tuần tự một chiều quanh mạng vòng...",
+        clues: [
+          { word: "one direction", note: "truyền theo một chiều duy nhất" },
+          { word: "token", note: "thẻ bài Token Ring" }
+        ]
+      },
+      { 
+        id: 48, pre: "When you ask Siri or Cortana where the closest gas station is, it’s really translating your voice into text, feeding it to a ", ans: "search engine", post: ", and read the answer back in human syntax.", 
+        trans: "Khi bạn hỏi Siri vị trí cây xăng gần nhất, nó nạp văn bản vào một công cụ tìm kiếm...",
+        clues: [
+          { word: "feeding it to a search engine", note: "nạp dữ liệu vào cỗ máy tìm kiếm (Google, Bing...)" }
+        ]
+      },
+      { 
+        id: 49, pre: "While people are mostly using home WiFi, they would still use their mobile phones for voice ", ans: "calls", post: ", and this is the area that MNOs need to keep a close eye on.", 
+        trans: "Dù mọi người chủ yếu kết nối WiFi, họ vẫn sử dụng điện thoại để gọi thoại...",
+        clues: [
+          { word: "voice calls", note: "các cuộc gọi thoại truyền thống" }
+        ]
+      },
+      { 
+        id: 50, pre: "With the potential congestion of fixed broadband service, there is a chance that devices will fall back on ", ans: "cellular", post: " networks, and this will cause a significant surge of mobile data traffic.", 
+        trans: "Trước nguy cơ nghẽn mạng băng rộng cố định, người dùng có xu hướng quay lại dùng mạng di động tế bào (cellular)...",
+        clues: [
+          { word: "cellular networks", note: "mạng dữ liệu di động (4G/5G/LTE)" }
+        ]
+      }
     ];
 
-    // DỮ LIỆU PHẦN 3: 50 câu True/False + Giải thích chi tiết
+    // DỮ LIỆU PHẦN 3: 50 câu True/False
     const part3Data = [
-      { id: 1, text: "A cloud database is an automated or built-in database for such a virtualized environment.", ans: "T", exp: "Đúng. CSDL đám mây được tối ưu và thiết kế chạy sẵn trên môi trường ảo hóa." },
-      { id: 2, text: "A cloud database is used for large data sets.", ans: "T", exp: "Đúng. CSDL đám mây có khả năng mở rộng (scale) không giới hạn cho các tập dữ liệu cực lớn." },
-      { id: 3, text: "A cloud service offers various advantages, including the ability to pay per user storage capacity and bandwidth and provides scalability on request, as well as low availability.", ans: "F", exp: "Sai ở chỗ 'low availability' (độ sẵn sàng thấp). Dịch vụ đám mây luôn cung cấp High Availability (độ khả dụng cao)." },
-      { id: 4, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", exp: "Đúng. Câu truy vấn (Query) cho phép lọc và trích xuất dữ liệu dựa theo các điều kiện đặt trước." },
-      { id: 5, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", exp: "Đúng (Câu hỏi lặp lại trong đề cương để nhấn mạnh khái niệm Query)." },
-      { id: 6, text: "A field is a group of records holding large amount of information.", ans: "F", exp: "Sai. Field (Trường) là một cột thuộc tính. Ngược lại, File/Table mới là tập hợp của nhiều bản ghi (records)." },
-      { id: 7, text: "A LAN connects computers in an office building, school, over a relatively long distance.", ans: "F", exp: "Sai ở chỗ 'long distance'. LAN (Local Area Network) chỉ kết nối ở cự ly ngắn (short distance)." },
-      { id: 8, text: "A mainframe computer is less powerful than a PC.", ans: "F", exp: "Sai. Máy tính lớn (Mainframe) có sức mạnh vượt trội hơn PC gấp hàng nghìn lần." },
+      { id: 1, text: "A cloud database is an automated or built-in database for such a virtualized environment.", ans: "T", exp: "Đúng. CSDL đám mây được xây dựng riêng để chạy tự động trên môi trường ảo hóa." },
+      { id: 2, text: "A cloud database is used for large data sets.", ans: "T", exp: "Đúng. Cloud database có khả năng mở rộng (scale) vô tận cho các tập dữ liệu lớn." },
+      { id: 3, text: "A cloud service offers various advantages, including the ability to pay per user storage capacity and bandwidth and provides scalability on request, as well as low availability.", ans: "F", exp: "Sai ở chỗ 'low availability' (độ sẵn sàng thấp). Cloud thực tế cung cấp High Availability (độ sẵn sàng rất cao)." },
+      { id: 4, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", exp: "Đúng. Truy vấn (Query) là chức năng trích xuất dữ liệu thỏa mãn điều kiện lọc." },
+      { id: 5, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", exp: "Đúng." },
+      { id: 6, text: "A field is a group of records holding large amount of information.", ans: "F", exp: "Sai. Field (Trường/Cột) chỉ là một thuộc tính. File hoặc Table mới là tập hợp các bản ghi (records)." },
+      { id: 7, text: "A LAN connects computers in an office building, school, over a relatively long distance.", ans: "F", exp: "Sai ở chỗ 'long distance'. LAN (Local Area Network) là mạng cục bộ trong phạm vi ngắn (short distance)." },
+      { id: 8, text: "A mainframe computer is less powerful than a PC.", ans: "F", exp: "Sai. Máy tính lớn (Mainframe) mạnh hơn máy tính cá nhân (PC) gấp nhiều lần." },
       { id: 9, text: "A mainframe computer is more powerful than a PC.", ans: "T", exp: "Đúng." },
-      { id: 10, text: "A mainframe is used by large organizations that need to process great amount of data.", ans: "T", exp: "Đúng. Mainframe chuyên dùng cho ngân hàng, tập đoàn lớn để xử lý lượng giao dịch khổng lồ." },
-      { id: 11, text: "A mainframe is used by large organizations that need to process small amount of data.", ans: "F", exp: "Sai ở từ 'small amount'. Mainframe dùng để xử lý dữ liệu lớn (great amount)." },
-      { id: 12, text: "A MAN is a specialized network that provides access to block-level storage—shared network or cloud storage that, to the user, looks and works like a storage drive that’s physically attached to a computer.", ans: "F", exp: "Sai. Đây là định nghĩa của mạng lưu trữ SAN (Storage Area Network), không phải MAN (Metropolitan Area Network)." },
-      { id: 13, text: "A Personal Database is an automated or built-in database for such a virtualized environment.", ans: "F", exp: "Sai. Đây là định nghĩa của Cloud database. Personal database chỉ dùng cho máy tính cá nhân." },
-      { id: 14, text: "A Personal Digital Assistant is small enough to fit into the palm of your hand.", ans: "T", exp: "Đúng. PDA là thiết bị kỹ thuật số nhỏ gọn nằm vừa trong lòng bàn tay." },
-      { id: 15, text: "A VPN establishes an encrypted channel that keeps a user’s identity and access credentials, as well as any data transferred, inaccessible to hackers.", ans: "T", exp: "Đúng. Mạng riêng ảo (VPN) tạo một đường hầm mã hóa bảo vệ danh tính và dữ liệu người dùng." },
-      { id: 16, text: "A Web Application Firewall (WAF) which updates a threat database in real-time is one of the effective ways to filter application input to protect against code injection.", ans: "T", exp: "Đúng. Tường lửa ứng dụng web lọc dữ liệu đầu vào để ngăn chặn các đòn tấn công SQLi/Code Injection." },
-      { id: 17, text: "A wireless access point allows wireless devices to connect to the network.", ans: "T", exp: "Đúng. Điểm truy cập không dây (AP) cho phép các thiết bị thu phát sóng kết nối vào mạng." },
-      { id: 18, text: "Animations are placed around pieces of text to tell the web browser how to display text or pictures.", ans: "F", exp: "Sai. Đây là định nghĩa của Thẻ HTML (Tags), không phải Animations." },
-      { id: 19, text: "Background means the underlying colors and patterns of a web page.", ans: "T", exp: "Đúng. Background là hình ảnh hoặc màu nền phía dưới của trang web." },
-      { id: 20, text: "Centralized Database are the paid versions of the enormous databases, designed for users who wish to access the information for assistance.", ans: "F", exp: "Sai. CSDL tập trung (Centralized) lưu toàn bộ dữ liệu ở 1 điểm duy nhất, không phải định nghĩa về 'phiên bản trả phí'." },
-      { id: 21, text: "Digital TV is a way of transmitting pictures by means of digital signals, in contrast to the analogue signals used by traditional TV.", ans: "T", exp: "Đúng. Truyền hình kỹ thuật số truyền tín hiệu dưới dạng nhị phân số thay vì tín hiệu sóng analog." },
-      { id: 22, text: "E-mail, telephone, video calling, FAX machine are typically used to transmit information in electronic communication.", ans: "T", exp: "Đúng. Các phương tiện trên đều là công cụ truyền tải thông tin điện tử." },
+      { id: 10, text: "A mainframe is used by large organizations that need to process great amount of data.", ans: "T", exp: "Đúng. Ngân hàng, bảo hiểm dùng Mainframe để xử lý khối lượng giao dịch khổng lồ." },
+      { id: 11, text: "A mainframe is used by large organizations that need to process small amount of data.", ans: "F", exp: "Sai ở 'small amount'. Mainframe dùng để xử lý dữ liệu lớn (great amount)." },
+      { id: 12, text: "A MAN is a specialized network that provides access to block-level storage—shared network or cloud storage that, to the user, looks and works like a storage drive that’s physically attached to a computer.", ans: "F", exp: "Sai. Đây là định nghĩa của mạng lưu trữ SAN (Storage Area Network), không phải MAN (Metropolitan Network)." },
+      { id: 13, text: "A Personal Database is an automated or built-in database for such a virtualized environment.", ans: "F", exp: "Sai. Đây là định nghĩa của Cloud database. Personal database chỉ dùng cho cá nhân lưu trên máy tính riêng." },
+      { id: 14, text: "A Personal Digital Assistant is small enough to fit into the palm of your hand.", ans: "T", exp: "Đúng. Thiết bị PDA nằm vừa vặn trong lòng bàn tay." },
+      { id: 15, text: "A VPN establishes an encrypted channel that keeps a user’s identity and access credentials, as well as any data transferred, inaccessible to hackers.", ans: "T", exp: "Đúng. VPN tạo kênh truyền mã hóa bảo vệ danh tính trước tin tặc." },
+      { id: 16, text: "A Web Application Firewall (WAF) which updates a threat database in real-time is one of the effective ways to filter application input to protect against code injection.", ans: "T", exp: "Đúng. WAF kiểm duyệt luồng input theo thời gian thực để ngăn chặn tấn công tiêm mã độc (code injection)." },
+      { id: 17, text: "A wireless access point allows wireless devices to connect to the network.", ans: "T", exp: "Đúng. Access Point là điểm phát sóng giúp thiết bị không dây gia nhập mạng." },
+      { id: 18, text: "Animations are placed around pieces of text to tell the web browser how to display text or pictures.", ans: "F", exp: "Sai. Đây là định nghĩa của Thẻ HTML (Tags), không phải hoạt ảnh (Animations)." },
+      { id: 19, text: "Background means the underlying colors and patterns of a web page.", ans: "T", exp: "Đúng. Background là hình nền, màu nền nằm phía dưới trang web." },
+      { id: 20, text: "Centralized Database are the paid versions of the enormous databases, designed for users who wish to access the information for assistance.", ans: "F", exp: "Sai. Centralized Database là CSDL lưu trữ dữ liệu tại 1 vị trí tập trung duy nhất, không phải 'phiên bản trả phí'." },
+      { id: 21, text: "Digital TV is a way of transmitting pictures by means of digital signals, in contrast to the analogue signals used by traditional TV.", ans: "T", exp: "Đúng. Truyền hình số truyền tín hiệu kỹ thuật số thay cho tín hiệu analog truyền thống." },
+      { id: 22, text: "E-mail, telephone, video calling, FAX machine are typically used to transmit information in electronic communication.", ans: "T", exp: "Đúng." },
       { id: 23, text: "Hackers are always looking to exploit a private network or system's vulnerabilities so they can steal confidential information and data.", ans: "T", exp: "Đúng." },
       { id: 24, text: "Hackers are always trying to attack a private network or system's vulnerabilities so they can steal secret information and data.", ans: "T", exp: "Đúng." },
       { id: 25, text: "Hackers are always trying to attack a private network or system’s vulnerabilities so they can steal secret information and data.", ans: "T", exp: "Đúng." },
-      { id: 26, text: "Hardware is any physical part of the computer which includes the internal components and the external parts like the monitor and printer.", ans: "T", exp: "Đúng. Phần cứng bao gồm cả linh kiện bên trong lẫn thiết bị ngoại vi bên ngoài." },
-      { id: 27, text: "If you want to protect your PC, don’t open email attachments from strangers and take care when downloading files from the Web.", ans: "T", exp: "Đúng. Cẩn trọng với tệp đính kèm lạ và tải file từ web là nguyên tắc an toàn thông tin cơ bản." },
-      { id: 28, text: "If you want to send instant messages on Facebook Messenger, Whatsapp or Snapchat, you will be charged a large amount of fee.", ans: "F", exp: "Sai. Các ứng dụng nhắn tin này hoàn toàn miễn phí qua kết nối Internet." },
-      { id: 29, text: "If your computer is attacked by ransomware, you don’t have to pay any ransom to unlock your screen and your files.", ans: "F", exp: "Sai. Ransomware ép buộc nạn nhân phải nộp tiền chuộc (ransom) mới chịu cung cấp khóa giải mã." },
-      { id: 30, text: "In a star bus network, each node is connected to its left in a circle.", ans: "F", exp: "Sai. Kết nối thành một vòng tròn khép kín là kiến trúc mạng hình vòng (Ring network)." },
-      { id: 31, text: "In distribution database, the data is stored centrally and user from various locations can access this data.", ans: "F", exp: "Sai. Dữ liệu lưu tập trung ở một chỗ là CSDL tập trung (Centralized Database), không phải phân tán (Distributed)." },
+      { id: 26, text: "Hardware is any physical part of the computer which includes the internal components and the external parts like the monitor and printer.", ans: "T", exp: "Đúng. Phần cứng bao gồm cả bộ phận bên trong thùng máy và linh kiện ngoại vi bên ngoài." },
+      { id: 27, text: "If you want to protect your PC, don’t open email attachments from strangers and take care when downloading files from the Web.", ans: "T", exp: "Đúng." },
+      { id: 28, text: "If you want to send instant messages on Facebook Messenger, Whatsapp or Snapchat, you will be charged a large amount of fee.", ans: "F", exp: "Sai. Các ứng dụng nhắn tin này hoạt động miễn phí trên đường truyền Internet." },
+      { id: 29, text: "If your computer is attacked by ransomware, you don’t have to pay any ransom to unlock your screen and your files.", ans: "F", exp: "Sai. Mã độc ransomware ép người dùng phải trả tiền chuộc mới mong lấy lại dữ liệu." },
+      { id: 30, text: "In a star bus network, each node is connected to its left in a circle.", ans: "F", exp: "Sai. Kết nối thành vòng tròn khép kín sang máy bên cạnh là Ring network (Mạng hình vòng)." },
+      { id: 31, text: "In distribution database, the data is stored centrally and user from various locations can access this data.", ans: "F", exp: "Sai. Dữ liệu lưu trữ tập trung ở một vị trí là Centralized Database, không phải Distribution (phân tán)." },
       { id: 32, text: "Instant message is a kind of service that allows people to send short message for free.", ans: "T", exp: "Đúng." },
       { id: 33, text: "Instant messages are sent for free over the internet and can contain multimedia items like emoji, pictures, videos and voice recordings.", ans: "T", exp: "Đúng." },
       { id: 34, text: "Instant messages are sent for free over the internet and can contain multimedia items like emoji, pictures, videos and voice recordings.", ans: "T", exp: "Đúng." },
-      { id: 35, text: "Malware attack is malicious software that changes a browser's behavior, settings, or appearance without user consent.", ans: "F", exp: "Sai. Đây là định nghĩa cụ thể của Browser hijacker (kẻ chiếm quyền trình duyệt), không phải định nghĩa khái quát của Malware." },
-      { id: 36, text: "MANs are typically bigger than LANs but smaller and WANs.", ans: "T", exp: "Đúng về bản chất (về quy mô địa lý: LAN < MAN < WAN)." },
-      { id: 37, text: "Meta tag is invisible information (e.g. a hidden keyword) on a website.", ans: "T", exp: "Đúng. Meta tag chứa thông tin mô tả dành riêng cho máy tìm kiếm, không hiển thị trên thân trang." },
-      { id: 38, text: "Neural networks are used to convert handwritten characters into digital characters that a machine can recognize.", ans: "T", exp: "Đúng. Nhận dạng chữ viết tay (OCR) là ứng dụng kinh điển của mạng nơ-ron." },
-      { id: 39, text: "Peripherals are the physical units attached to the computer. They include storage devices and input/output devices.", ans: "T", exp: "Đúng. Thiết bị ngoại vi gồm cả ổ nhớ ngoài và thiết bị I/O." },
-      { id: 40, text: "Phishing is a cyber-attack in which phishing emails are sent to gather users’ login information.", ans: "T", exp: "Đúng. Phishing giả mạo thư điện tử của các tổ chức uy tín để đánh cắp mật khẩu." },
-      { id: 41, text: "Private networks can’t be attacked by intruders who attempt to obtain information such as Social Security numbers, bank accounts or research and business reports.", ans: "F", exp: "Sai. Mạng nội bộ/mạng riêng hoàn toàn có thể bị tin tặc tấn công nếu tồn tại lỗ hổng bảo mật." },
-      { id: 42, text: "Relational database is the database which is made up of related files.", ans: "T", exp: "Đúng. CSDL quan hệ liên kết các bảng/tệp dữ liệu có quan hệ logic với nhau." },
-      { id: 43, text: "Systems Administrators, Network Administrators, or anyone who has anything to do with cybersecurity will also be under a great deal of stress.", ans: "T", exp: "Đúng. Nhân sự vận hành mạng và an toàn thông tin luôn chịu áp lực công việc trực chiến rất lớn." },
-      { id: 44, text: "Tech professionals are not required to constantly keep themselves up-to-date on the latest trends and developments.", ans: "F", exp: "Sai. Dân công nghệ bắt buộc phải liên tục học hỏi và cập nhật các xu hướng phát triển mới." },
+      { id: 35, text: "Malware attack is malicious software that changes a browser's behavior, settings, or appearance without user consent.", ans: "F", exp: "Sai. Đây là định nghĩa hẹp của Browser hijacker, không phải toàn bộ mã độc malware nói chung." },
+      { id: 36, text: "MANs are typically bigger than LANs but smaller and WANs.", ans: "T", exp: "Đúng về quy mô (LAN < MAN < WAN)." },
+      { id: 37, text: "Meta tag is invisible information (e.g. a hidden keyword) on a website.", ans: "T", exp: "Đúng. Thẻ meta tag chứa từ khóa ẩn dành cho công cụ tìm kiếm, mắt thường không thấy trên giao diện." },
+      { id: 38, text: "Neural networks are used to convert handwritten characters into digital characters that a machine can recognize.", ans: "T", exp: "Đúng. Ứng dụng nhận diện chữ viết tay OCR." },
+      { id: 39, text: "Peripherals are the physical units attached to the computer. They include storage devices and input/output devices.", ans: "T", exp: "Đúng. Thiết bị ngoại vi bao gồm thiết bị lưu trữ ngoài và thiết bị I/O." },
+      { id: 40, text: "Phishing is a cyber-attack in which phishing emails are sent to gather users’ login information.", ans: "T", exp: "Đúng. Phishing giả mạo thư điện tử hòng lừa mật khẩu người dùng." },
+      { id: 41, text: "Private networks can’t be attacked by intruders who attempt to obtain information such as Social Security numbers, bank accounts or research and business reports.", ans: "F", exp: "Sai. Mạng riêng vẫn hoàn toàn có thể bị kẻ xấu đột nhập nếu có lỗ hổng." },
+      { id: 42, text: "Relational database is the database which is made up of related files.", ans: "T", exp: "Đúng. CSDL quan hệ liên kết các bảng/tệp có quan hệ mật thiết với nhau." },
+      { id: 43, text: "Systems Administrators, Network Administrators, or anyone who has anything to do with cybersecurity will also be under a great deal of stress.", ans: "T", exp: "Đúng. Quản trị hệ thống và chuyên viên an toàn thông tin chịu áp lực công việc cực kỳ lớn." },
+      { id: 44, text: "Tech professionals are not required to constantly keep themselves up-to-date on the latest trends and developments.", ans: "F", exp: "Sai ở chỗ 'not required'. Nhân sự công nghệ bắt buộc phải liên tục cập nhật công nghệ mới." },
       { id: 45, text: "Thanks to electronic communication, mobile phones now let you check your email, browse the Web and connect with home or company intranets, all without wire.", ans: "T", exp: "Đúng." },
-      { id: 46, text: "The analysis of large-size, unstructured information can’t be done very efficiently on several cloud virtual servers.", ans: "F", exp: "Sai ở chỗ 'can't be done'. Điện toán đám mây phân tích dữ liệu lớn cực kỳ hiệu quả (can be done very efficiently)." },
-      { id: 47, text: "The connection between devices of WLAN and LAN are the same.", ans: "F", exp: "Sai. WLAN dùng sóng vô tuyến không dây (wireless/radio waves), trong khi LAN truyền thống dùng cáp mạng vật lý (Ethernet cables)." },
-      { id: 48, text: "The network starts with an input layer that receives output in the form of data.", ans: "F", exp: "Sai. Lớp đầu vào (Input layer) phải nhận 'input', chứ không thể nhận 'output'." },
-      { id: 49, text: "Vlogging and Blogging are similar in delivering informal styles, however, with Vlogging, Vloggers can post videos.", ans: "T", exp: "Đúng. Vlogging là hình thức truyền tải nhật ký qua các video trực quan." },
-      { id: 50, text: "VOIP allows voice and multimedia data to be transferred across a data network.", ans: "T", exp: "Đúng. VOIP cho phép truyền giọng nói và đa phương tiện qua hạ tầng mạng IP." }
+      { id: 46, text: "The analysis of large-size, unstructured information can’t be done very efficiently on several cloud virtual servers.", ans: "F", exp: "Sai ở từ 'can't be done'. Điện toán đám mây xử lý và phân tích dữ liệu lớn rất hiệu quả." },
+      { id: 47, text: "The connection between devices of WLAN and LAN are the same.", ans: "F", exp: "Sai. WLAN dùng sóng vô tuyến (không dây), còn LAN dùng dây cáp mạng vật lý." },
+      { id: 48, text: "The network starts with an input layer that receives output in the form of data.", ans: "F", exp: "Sai. Tầng đầu vào (input layer) phải tiếp nhận input, chứ không thể nhận output." },
+      { id: 49, text: "Vlogging and Blogging are similar in delivering informal styles, however, with Vlogging, Vloggers can post videos.", ans: "T", exp: "Đúng. Vlogging là hình thức làm blog dưới dạng video sinh động." },
+      { id: 50, text: "VOIP allows voice and multimedia data to be transferred across a data network.", ans: "T", exp: "Đúng." }
     ];
 
     let correctCount = 0;
@@ -339,7 +1074,6 @@
     const totalQuestions = 48 + 50 + 50;
     let isP2MultipleChoice = true;
 
-    // Kích hoạt pháo hoa vui nhộn khi trả lời đúng
     function triggerConfetti() {
       try {
         confetti({
@@ -382,12 +1116,12 @@
       ['part1', 'part2', 'part3'].forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
         const b = document.getElementById(`tab-${t}`);
-        b.classList.remove('border-cyan-400', 'text-white');
+        b.classList.remove('border-amber-400', 'text-white');
         b.classList.add('border-transparent', 'text-indigo-200');
       });
       document.getElementById(`section-${tab}`).classList.remove('hidden');
       const activeBtn = document.getElementById(`tab-${tab}`);
-      activeBtn.classList.add('border-cyan-400', 'text-white');
+      activeBtn.classList.add('border-amber-400', 'text-white');
       activeBtn.classList.remove('border-transparent', 'text-indigo-200');
     }
 
@@ -401,14 +1135,13 @@
     }
 
     // ==========================================
-    // RENDER PHẦN 1: KHI SAI TỰ ĐỘNG HIỆN ĐÁP ÁN ĐÚNG
+    // RENDER PHẦN 1: CÓ PHÂN TÍCH TỪ KHÓA MẤU CHỐT (KEYWORDS)
     // ==========================================
     function renderPart1() {
       const container = document.getElementById('part1Container');
       container.innerHTML = '';
 
       part1Data.forEach((item, index) => {
-        // Lấy 3 đáp án sai ngẫu nhiên
         const otherItems = part1Data.filter(x => x.id !== item.id);
         const shuffledOthers = shuffleArray(otherItems).slice(0, 3);
         
@@ -434,6 +1167,14 @@
           </button>
         `).join('');
 
+        // Sinh danh sách từ khóa mấu chốt
+        let keywordsHTML = item.keywords.map(kw => `
+          <span class="inline-flex items-center gap-1.5 bg-amber-100/80 text-amber-900 border border-amber-300 px-2.5 py-1 rounded-lg text-xs font-medium">
+            <i class="fa-solid fa-key text-amber-600 text-[10px]"></i>
+            <span class="font-bold">${kw.en}</span>: <span>${kw.vi}</span>
+          </span>
+        `).join('');
+
         card.innerHTML = `
           <div class="flex flex-wrap justify-between items-start gap-2 mb-3">
             <div class="flex items-center gap-2">
@@ -443,15 +1184,30 @@
             <button 
               type="button" 
               onclick="toggleP1Trans(${item.id})" 
-              class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-200 font-semibold transition flex items-center gap-1.5">
-              <i class="fa-solid fa-language text-indigo-500"></i> Xem dịch nghĩa
+              class="text-xs bg-amber-50 hover:bg-amber-100 text-amber-800 px-3 py-1.5 rounded-lg border border-amber-200 font-bold transition flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-amber-500"></i> Dịch & Từ mấu chốt
             </button>
           </div>
 
-          <!-- Dịch nghĩa thuật ngữ và câu -->
-          <div id="p1-trans-${item.id}" class="hidden mb-4 p-3.5 bg-amber-50/90 border border-amber-200 rounded-xl text-xs space-y-1.5 animate-pop">
-            <p><span class="font-bold text-amber-900">Dịch thuật ngữ:</span> <span class="text-slate-800 font-bold">${item.transTerm}</span></p>
-            <p><span class="font-bold text-amber-900">Dịch định nghĩa chuẩn:</span> <span class="text-slate-800">${item.transDef}</span></p>
+          <!-- Bảng phân tích dịch nghĩa & Keyword mấu chốt -->
+          <div id="p1-trans-${item.id}" class="hidden mb-4 p-4 bg-gradient-to-br from-amber-50 to-orange-50/60 border border-amber-200 rounded-xl text-xs space-y-3 animate-pop">
+            <div>
+              <p class="font-bold text-amber-950 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-language text-amber-600"></i> Dịch nghĩa câu định nghĩa:
+              </p>
+              <p class="text-slate-800 bg-white/70 p-2.5 rounded-lg border border-amber-100 leading-relaxed font-medium">
+                <span class="font-bold text-indigo-700">${item.term} (${item.transTerm}):</span> ${item.transDef}
+              </p>
+            </div>
+
+            <div>
+              <p class="font-bold text-amber-950 text-xs flex items-center gap-1.5 mb-1.5">
+                <i class="fa-solid fa-magnifying-glass text-amber-600"></i> Từ mấu chốt nhận diện khi đi thi (Keywords):
+              </p>
+              <div class="flex flex-wrap gap-2">
+                ${keywordsHTML}
+              </div>
+            </div>
           </div>
 
           <p class="text-xs text-slate-500 mb-2 font-medium">Chọn định nghĩa chính xác nhất cho thuật ngữ trên:</p>
@@ -472,7 +1228,6 @@
       allBtns.forEach(btn => {
         btn.disabled = true;
         btn.classList.add('cursor-not-allowed', 'opacity-85');
-        // Tìm và highlight đáp án đúng để người học đối chiếu ngay
         if (btn.getAttribute('data-correct') === 'true') {
           btn.classList.add('highlight-correct');
           btn.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i> ` + btn.innerHTML;
@@ -488,8 +1243,7 @@
         card.classList.add('animate-shake');
         btnElement.classList.add('wrong-btn');
         feedback.className = "mt-3 text-xs font-bold text-rose-600 flex items-center gap-1.5";
-        feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-base text-rose-500"></i> Chưa chính xác! Đáp án đúng đã được tô viền xanh nổi bật phía trên.`;
-        // Tự động mở dịch nghĩa khi làm sai để củng cố kiến thức
+        feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-base text-rose-500"></i> Chưa chính xác! Đáp án đúng đã được tô viền xanh nổi bật.`;
         document.getElementById(`p1-trans-${itemId}`).classList.remove('hidden');
         recordAnswer(false);
       }
@@ -501,13 +1255,12 @@
     }
 
     // ==========================================
-    // RENDER PHẦN 2: CHỌN ĐÁP ÁN (MCQ) HOẶC TỰ GÕ + TỰ ĐỘNG HIỆN ĐÁP ÁN KHI SAI
+    // RENDER PHẦN 2: CÓ PHÂN TÍCH TỪ GỢI Ý DẪN ĐƯỜNG (CLUE KEYWORDS)
     // ==========================================
     function renderPart2() {
       const container = document.getElementById('part2Container');
       container.innerHTML = '';
 
-      // Tập hợp tất cả các từ khóa để tạo phương án nhiễu ngẫu nhiên
       const allKeywords = part2Data.map(x => x.ans);
 
       part2Data.forEach((item, index) => {
@@ -515,7 +1268,6 @@
         card.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3.5 transition duration-200 hover:shadow-md";
         card.id = `p2-card-${item.id}`;
 
-        // Chuẩn bị 4 phương án trắc nghiệm cho Phần 2
         const otherKeywords = allKeywords.filter(k => k.toLowerCase() !== item.ans.toLowerCase());
         const shuffledDistractors = shuffleArray(otherKeywords).slice(0, 3);
         const choices = shuffleArray([
@@ -536,20 +1288,44 @@
           </button>
         `).join('');
 
+        // Sinh danh sách từ dẫn đường trong đề bài
+        let cluesHTML = item.clues.map(c => `
+          <span class="inline-flex items-center gap-1.5 bg-emerald-100/80 text-emerald-900 border border-emerald-300 px-2.5 py-1 rounded-lg text-xs font-medium">
+            <i class="fa-solid fa-quote-left text-emerald-600 text-[10px]"></i>
+            <span class="font-bold underline decoration-emerald-500">${c.word}</span>: <span>${c.note}</span>
+          </span>
+        `).join('');
+
         card.innerHTML = `
           <div class="flex flex-wrap justify-between items-start gap-2">
             <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-bold">Câu ${index + 1}</span>
             <button 
               type="button" 
               onclick="toggleP2Trans(${item.id})" 
-              class="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1 rounded-lg border border-emerald-200 font-semibold transition flex items-center gap-1">
-              <i class="fa-solid fa-language text-emerald-600"></i> Xem dịch câu
+              class="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1 rounded-lg border border-emerald-200 font-bold transition flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-emerald-600"></i> Dịch & Từ mấu chốt
             </button>
           </div>
 
-          <!-- Bản dịch câu tiếng Việt -->
-          <div id="p2-trans-${item.id}" class="hidden p-3 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs text-slate-700 leading-relaxed font-medium animate-pop">
-            <span class="font-bold text-emerald-900"><i class="fa-solid fa-circle-info mr-1"></i>Dịch nghĩa:</span> ${item.trans}
+          <!-- Khối dịch toàn bộ câu và từ dẫn đường -->
+          <div id="p2-trans-${item.id}" class="hidden p-4 bg-gradient-to-br from-emerald-50 to-teal-50/60 border border-emerald-200 rounded-xl text-xs space-y-3 animate-pop">
+            <div>
+              <p class="font-bold text-emerald-950 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-language text-emerald-700"></i> Dịch nghĩa câu hoàn chỉnh:
+              </p>
+              <p class="text-slate-800 bg-white/70 p-2.5 rounded-lg border border-emerald-100 leading-relaxed font-medium">
+                ${item.trans}
+              </p>
+            </div>
+
+            <div>
+              <p class="font-bold text-emerald-950 text-xs flex items-center gap-1.5 mb-1.5">
+                <i class="fa-solid fa-crosshairs text-emerald-700"></i> Dấu hiệu mấu chốt suy ra đáp án (Clues):
+              </p>
+              <div class="flex flex-wrap gap-2">
+                ${cluesHTML}
+              </div>
+            </div>
           </div>
 
           <div class="text-sm font-medium text-slate-800 leading-relaxed">
@@ -560,12 +1336,12 @@
             ${item.post}
           </div>
 
-          <!-- Chế độ trắc nghiệm 4 đáp án -->
+          <!-- Chế độ trắc nghiệm -->
           <div id="p2-mcq-${item.id}" class="${isP2MultipleChoice ? 'grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1' : 'hidden'}">
             ${mcqHTML}
           </div>
 
-          <!-- Chế độ tự gõ từ -->
+          <!-- Chế độ gõ từ -->
           <div id="p2-inputmode-${item.id}" class="${isP2MultipleChoice ? 'hidden' : 'flex flex-wrap items-center gap-2 pt-1'}">
             <input 
               type="text" 
@@ -615,7 +1391,7 @@
         card.classList.add('animate-shake');
         btnElement.classList.add('wrong-btn');
         resultEl.className = "text-xs font-bold text-rose-600 flex items-center gap-1.5";
-        resultEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-base text-rose-500"></i> Chưa đúng! Đáp án đúng đã được tô xanh viền nét đứt: <span class="underline text-slate-900">${correctAns}</span>`;
+        resultEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-base text-rose-500"></i> Chưa đúng! Đáp án đúng đã được tô viền xanh: <span class="underline text-slate-900">${correctAns}</span>`;
         document.getElementById(`p2-trans-${itemId}`).classList.remove('hidden');
         recordAnswer(false);
       }
@@ -737,7 +1513,6 @@
         b.classList.add('cursor-not-allowed', 'opacity-85');
       });
 
-      // Highlight đáp án đúng bất kể người dùng chọn gì
       const correctBtn = document.getElementById(`p3-btn-${item.ans}-${id}`);
       if (correctBtn) {
         correctBtn.classList.add('highlight-correct');
@@ -758,7 +1533,6 @@
       expEl.classList.remove('hidden');
     }
 
-    // Khởi chạy khi load trang
     window.onload = function() {
       renderPart1();
       renderPart2();

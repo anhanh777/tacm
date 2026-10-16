@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT English Pro - Keyword Revision Master</title>
+  <title>IT English Pro - Full Keyword Master</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -62,9 +62,9 @@
         </div>
         <div>
           <h1 class="text-lg md:text-xl font-extrabold tracking-tight flex items-center gap-2">
-            IT English Revision <span class="text-xs bg-amber-400 text-slate-900 font-black px-2 py-0.5 rounded-full">Keyword Mode</span>
+            IT English Revision <span class="text-xs bg-amber-400 text-slate-900 font-black px-2 py-0.5 rounded-full">All-Keyword Edition</span>
           </h1>
-          <p class="text-xs text-indigo-200">Đầy đủ 148 câu • Phân tích từ mấu chốt & Dịch chuyên sâu</p>
+          <p class="text-xs text-indigo-200">148 câu trọn vẹn • Dịch nghĩa & Phân tích từ mấu chốt cả 3 phần</p>
         </div>
       </div>
 
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <!-- Thanh tiến độ -->
+    <!-- Progress bar -->
     <div class="w-full bg-indigo-950/50 h-1.5">
       <div id="topProgressBar" class="bg-gradient-to-r from-amber-400 to-emerald-400 h-1.5 w-0 transition-all duration-300"></div>
     </div>
@@ -97,7 +97,7 @@
           <i class="fa-solid fa-key text-indigo-400"></i> Phần II: Điền khuyết & Từ gợi ý (50 câu)
         </button>
         <button onclick="switchTab('part3')" id="tab-part3" class="tab-btn px-4 py-2.5 font-bold border-b-2 border-transparent text-indigo-200 hover:text-white flex items-center gap-2 transition rounded-t-lg">
-          <i class="fa-solid fa-toggle-on text-indigo-400"></i> Phần III: True / False (50 câu)
+          <i class="fa-solid fa-circle-check text-indigo-400"></i> Phần III: True / False & Phân tích bẫy (50 câu)
         </button>
       </div>
     </nav>
@@ -122,7 +122,6 @@
           </button>
         </div>
       </div>
-
       <div id="part1Container" class="space-y-4"></div>
     </section>
 
@@ -145,20 +144,25 @@
           </button>
         </div>
       </div>
-
       <div id="part2Container" class="space-y-4"></div>
     </section>
 
-    <!-- PHẦN III -->
+    <!-- PHẦN III: TRUE / FALSE NÂNG CẤP DỊCH & KEYWORD BẪY -->
     <section id="section-part3" class="hidden space-y-4">
-      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-        <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
-          <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-black">III</span>
-          Decide if these statements are True (T) or False (F)
-        </h2>
-        <p class="text-xs text-slate-500 mt-1">Giải thích cặn kẽ tại sao đúng hoặc sai, chỉ ra những từ bẫy trong câu hỏi.</p>
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap justify-between items-center gap-4">
+        <div>
+          <h2 class="text-base md:text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-black">III</span>
+            Decide if these statements are True (T) or False (F)
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">Bổ sung bản dịch tiếng Việt, phân tích từ mấu chốt quyết định tính Đúng/Sai và giải thích chi tiết lý do.</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="toggleAllPart3Translations()" class="px-3.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold rounded-lg transition flex items-center gap-1.5">
+            <i class="fa-solid fa-language"></i> Bật/Tắt toàn bộ dịch & Phân tích
+          </button>
+        </div>
       </div>
-
       <div id="part3Container" class="space-y-4"></div>
     </section>
 
@@ -169,7 +173,7 @@
   </footer>
 
   <script>
-    // DỮ LIỆU PHẦN 1: 48 câu + Dịch chuẩn + Phân tích từ mấu chốt
+    // DỮ LIỆU PHẦN 1: 48 câu
     const part1Data = [
       { 
         id: 1, term: "A computer", 
@@ -652,7 +656,7 @@
       }
     ];
 
-    // DỮ LIỆU PHẦN 2: 50 câu + Dịch câu + Phân tích từ mấu chốt dẫn đường
+    // DỮ LIỆU PHẦN 2: 50 câu
     const part2Data = [
       { 
         id: 1, pre: "", ans: "Wearable computers", post: " are designed to be worn on the body or integrated into the user’s clothing.", 
@@ -1015,58 +1019,447 @@
       }
     ];
 
-    // DỮ LIỆU PHẦN 3: 50 câu True/False
+    // DỮ LIỆU PHẦN 3: 50 câu True/False NÂNG CẤP DỊCH + PHÂN TÍCH TỪ MẤU CHỐT / BẪY
     const part3Data = [
-      { id: 1, text: "A cloud database is an automated or built-in database for such a virtualized environment.", ans: "T", exp: "Đúng. CSDL đám mây được xây dựng riêng để chạy tự động trên môi trường ảo hóa." },
-      { id: 2, text: "A cloud database is used for large data sets.", ans: "T", exp: "Đúng. Cloud database có khả năng mở rộng (scale) vô tận cho các tập dữ liệu lớn." },
-      { id: 3, text: "A cloud service offers various advantages, including the ability to pay per user storage capacity and bandwidth and provides scalability on request, as well as low availability.", ans: "F", exp: "Sai ở chỗ 'low availability' (độ sẵn sàng thấp). Cloud thực tế cung cấp High Availability (độ sẵn sàng rất cao)." },
-      { id: 4, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", exp: "Đúng. Truy vấn (Query) là chức năng trích xuất dữ liệu thỏa mãn điều kiện lọc." },
-      { id: 5, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", exp: "Đúng." },
-      { id: 6, text: "A field is a group of records holding large amount of information.", ans: "F", exp: "Sai. Field (Trường/Cột) chỉ là một thuộc tính. File hoặc Table mới là tập hợp các bản ghi (records)." },
-      { id: 7, text: "A LAN connects computers in an office building, school, over a relatively long distance.", ans: "F", exp: "Sai ở chỗ 'long distance'. LAN (Local Area Network) là mạng cục bộ trong phạm vi ngắn (short distance)." },
-      { id: 8, text: "A mainframe computer is less powerful than a PC.", ans: "F", exp: "Sai. Máy tính lớn (Mainframe) mạnh hơn máy tính cá nhân (PC) gấp nhiều lần." },
-      { id: 9, text: "A mainframe computer is more powerful than a PC.", ans: "T", exp: "Đúng." },
-      { id: 10, text: "A mainframe is used by large organizations that need to process great amount of data.", ans: "T", exp: "Đúng. Ngân hàng, bảo hiểm dùng Mainframe để xử lý khối lượng giao dịch khổng lồ." },
-      { id: 11, text: "A mainframe is used by large organizations that need to process small amount of data.", ans: "F", exp: "Sai ở 'small amount'. Mainframe dùng để xử lý dữ liệu lớn (great amount)." },
-      { id: 12, text: "A MAN is a specialized network that provides access to block-level storage—shared network or cloud storage that, to the user, looks and works like a storage drive that’s physically attached to a computer.", ans: "F", exp: "Sai. Đây là định nghĩa của mạng lưu trữ SAN (Storage Area Network), không phải MAN (Metropolitan Network)." },
-      { id: 13, text: "A Personal Database is an automated or built-in database for such a virtualized environment.", ans: "F", exp: "Sai. Đây là định nghĩa của Cloud database. Personal database chỉ dùng cho cá nhân lưu trên máy tính riêng." },
-      { id: 14, text: "A Personal Digital Assistant is small enough to fit into the palm of your hand.", ans: "T", exp: "Đúng. Thiết bị PDA nằm vừa vặn trong lòng bàn tay." },
-      { id: 15, text: "A VPN establishes an encrypted channel that keeps a user’s identity and access credentials, as well as any data transferred, inaccessible to hackers.", ans: "T", exp: "Đúng. VPN tạo kênh truyền mã hóa bảo vệ danh tính trước tin tặc." },
-      { id: 16, text: "A Web Application Firewall (WAF) which updates a threat database in real-time is one of the effective ways to filter application input to protect against code injection.", ans: "T", exp: "Đúng. WAF kiểm duyệt luồng input theo thời gian thực để ngăn chặn tấn công tiêm mã độc (code injection)." },
-      { id: 17, text: "A wireless access point allows wireless devices to connect to the network.", ans: "T", exp: "Đúng. Access Point là điểm phát sóng giúp thiết bị không dây gia nhập mạng." },
-      { id: 18, text: "Animations are placed around pieces of text to tell the web browser how to display text or pictures.", ans: "F", exp: "Sai. Đây là định nghĩa của Thẻ HTML (Tags), không phải hoạt ảnh (Animations)." },
-      { id: 19, text: "Background means the underlying colors and patterns of a web page.", ans: "T", exp: "Đúng. Background là hình nền, màu nền nằm phía dưới trang web." },
-      { id: 20, text: "Centralized Database are the paid versions of the enormous databases, designed for users who wish to access the information for assistance.", ans: "F", exp: "Sai. Centralized Database là CSDL lưu trữ dữ liệu tại 1 vị trí tập trung duy nhất, không phải 'phiên bản trả phí'." },
-      { id: 21, text: "Digital TV is a way of transmitting pictures by means of digital signals, in contrast to the analogue signals used by traditional TV.", ans: "T", exp: "Đúng. Truyền hình số truyền tín hiệu kỹ thuật số thay cho tín hiệu analog truyền thống." },
-      { id: 22, text: "E-mail, telephone, video calling, FAX machine are typically used to transmit information in electronic communication.", ans: "T", exp: "Đúng." },
-      { id: 23, text: "Hackers are always looking to exploit a private network or system's vulnerabilities so they can steal confidential information and data.", ans: "T", exp: "Đúng." },
-      { id: 24, text: "Hackers are always trying to attack a private network or system's vulnerabilities so they can steal secret information and data.", ans: "T", exp: "Đúng." },
-      { id: 25, text: "Hackers are always trying to attack a private network or system’s vulnerabilities so they can steal secret information and data.", ans: "T", exp: "Đúng." },
-      { id: 26, text: "Hardware is any physical part of the computer which includes the internal components and the external parts like the monitor and printer.", ans: "T", exp: "Đúng. Phần cứng bao gồm cả bộ phận bên trong thùng máy và linh kiện ngoại vi bên ngoài." },
-      { id: 27, text: "If you want to protect your PC, don’t open email attachments from strangers and take care when downloading files from the Web.", ans: "T", exp: "Đúng." },
-      { id: 28, text: "If you want to send instant messages on Facebook Messenger, Whatsapp or Snapchat, you will be charged a large amount of fee.", ans: "F", exp: "Sai. Các ứng dụng nhắn tin này hoạt động miễn phí trên đường truyền Internet." },
-      { id: 29, text: "If your computer is attacked by ransomware, you don’t have to pay any ransom to unlock your screen and your files.", ans: "F", exp: "Sai. Mã độc ransomware ép người dùng phải trả tiền chuộc mới mong lấy lại dữ liệu." },
-      { id: 30, text: "In a star bus network, each node is connected to its left in a circle.", ans: "F", exp: "Sai. Kết nối thành vòng tròn khép kín sang máy bên cạnh là Ring network (Mạng hình vòng)." },
-      { id: 31, text: "In distribution database, the data is stored centrally and user from various locations can access this data.", ans: "F", exp: "Sai. Dữ liệu lưu trữ tập trung ở một vị trí là Centralized Database, không phải Distribution (phân tán)." },
-      { id: 32, text: "Instant message is a kind of service that allows people to send short message for free.", ans: "T", exp: "Đúng." },
-      { id: 33, text: "Instant messages are sent for free over the internet and can contain multimedia items like emoji, pictures, videos and voice recordings.", ans: "T", exp: "Đúng." },
-      { id: 34, text: "Instant messages are sent for free over the internet and can contain multimedia items like emoji, pictures, videos and voice recordings.", ans: "T", exp: "Đúng." },
-      { id: 35, text: "Malware attack is malicious software that changes a browser's behavior, settings, or appearance without user consent.", ans: "F", exp: "Sai. Đây là định nghĩa hẹp của Browser hijacker, không phải toàn bộ mã độc malware nói chung." },
-      { id: 36, text: "MANs are typically bigger than LANs but smaller and WANs.", ans: "T", exp: "Đúng về quy mô (LAN < MAN < WAN)." },
-      { id: 37, text: "Meta tag is invisible information (e.g. a hidden keyword) on a website.", ans: "T", exp: "Đúng. Thẻ meta tag chứa từ khóa ẩn dành cho công cụ tìm kiếm, mắt thường không thấy trên giao diện." },
-      { id: 38, text: "Neural networks are used to convert handwritten characters into digital characters that a machine can recognize.", ans: "T", exp: "Đúng. Ứng dụng nhận diện chữ viết tay OCR." },
-      { id: 39, text: "Peripherals are the physical units attached to the computer. They include storage devices and input/output devices.", ans: "T", exp: "Đúng. Thiết bị ngoại vi bao gồm thiết bị lưu trữ ngoài và thiết bị I/O." },
-      { id: 40, text: "Phishing is a cyber-attack in which phishing emails are sent to gather users’ login information.", ans: "T", exp: "Đúng. Phishing giả mạo thư điện tử hòng lừa mật khẩu người dùng." },
-      { id: 41, text: "Private networks can’t be attacked by intruders who attempt to obtain information such as Social Security numbers, bank accounts or research and business reports.", ans: "F", exp: "Sai. Mạng riêng vẫn hoàn toàn có thể bị kẻ xấu đột nhập nếu có lỗ hổng." },
-      { id: 42, text: "Relational database is the database which is made up of related files.", ans: "T", exp: "Đúng. CSDL quan hệ liên kết các bảng/tệp có quan hệ mật thiết với nhau." },
-      { id: 43, text: "Systems Administrators, Network Administrators, or anyone who has anything to do with cybersecurity will also be under a great deal of stress.", ans: "T", exp: "Đúng. Quản trị hệ thống và chuyên viên an toàn thông tin chịu áp lực công việc cực kỳ lớn." },
-      { id: 44, text: "Tech professionals are not required to constantly keep themselves up-to-date on the latest trends and developments.", ans: "F", exp: "Sai ở chỗ 'not required'. Nhân sự công nghệ bắt buộc phải liên tục cập nhật công nghệ mới." },
-      { id: 45, text: "Thanks to electronic communication, mobile phones now let you check your email, browse the Web and connect with home or company intranets, all without wire.", ans: "T", exp: "Đúng." },
-      { id: 46, text: "The analysis of large-size, unstructured information can’t be done very efficiently on several cloud virtual servers.", ans: "F", exp: "Sai ở từ 'can't be done'. Điện toán đám mây xử lý và phân tích dữ liệu lớn rất hiệu quả." },
-      { id: 47, text: "The connection between devices of WLAN and LAN are the same.", ans: "F", exp: "Sai. WLAN dùng sóng vô tuyến (không dây), còn LAN dùng dây cáp mạng vật lý." },
-      { id: 48, text: "The network starts with an input layer that receives output in the form of data.", ans: "F", exp: "Sai. Tầng đầu vào (input layer) phải tiếp nhận input, chứ không thể nhận output." },
-      { id: 49, text: "Vlogging and Blogging are similar in delivering informal styles, however, with Vlogging, Vloggers can post videos.", ans: "T", exp: "Đúng. Vlogging là hình thức làm blog dưới dạng video sinh động." },
-      { id: 50, text: "VOIP allows voice and multimedia data to be transferred across a data network.", ans: "T", exp: "Đúng." }
+      { 
+        id: 1, text: "A cloud database is an automated or built-in database for such a virtualized environment.", ans: "T", 
+        trans: "Cơ sở dữ liệu đám mây là một cơ sở dữ liệu được tích hợp sẵn hoặc tự động hóa dành riêng cho môi trường ảo hóa.",
+        keywords: [
+          { word: "automated / built-in", role: "Đặc tính tự động hóa chuẩn của Cloud" },
+          { word: "virtualized environment", role: "Môi trường ảo hóa (Khái niệm cốt lõi của Cloud)" }
+        ],
+        exp: "Khẳng định này ĐÚNG hoàn toàn theo định nghĩa chuẩn của Cloud Database." 
+      },
+      { 
+        id: 2, text: "A cloud database is used for large data sets.", ans: "T", 
+        trans: "Cơ sở dữ liệu đám mây được sử dụng cho các tập dữ liệu lớn.",
+        keywords: [
+          { word: "large data sets", role: "Tập dữ liệu dung lượng lớn (Big Data)" },
+          { word: "used for", role: "Khả năng lưu trữ và mở rộng (Scalability)" }
+        ],
+        exp: "ĐÚNG. Nhờ kiến trúc phân tán đàn hồi, Cloud Database chuyên dùng để lưu trữ và xử lý các tập dữ liệu cực lớn." 
+      },
+      { 
+        id: 3, text: "A cloud service offers various advantages, including the ability to pay per user storage capacity and bandwidth and provides scalability on request, as well as low availability.", ans: "F", 
+        trans: "Dịch vụ đám mây mang lại nhiều ưu điểm, gồm trả phí theo dung lượng, băng thông, mở rộng theo yêu cầu, cũng như tính khả dụng thấp.",
+        keywords: [
+          { word: "low availability", role: "Từ khóa BẪY SAI! (Độ khả dụng thấp)" },
+          { word: "High availability", role: "Thực tế Cloud luôn mang lại độ sẵn sàng cao" }
+        ],
+        exp: "Khẳng định này SAI nghiêm trọng ở cụm từ 'low availability'. Đám mây luôn đảm bảo độ sẵn sàng cao (High Availability 99.99%)." 
+      },
+      { 
+        id: 4, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", 
+        trans: "Hàm truy vấn cơ sở dữ liệu cho phép bạn trích xuất thông tin theo những điều kiện hoặc tiêu chí nhất định.",
+        keywords: [
+          { word: "query function", role: "Hàm truy vấn dữ liệu (SQL SELECT...)" },
+          { word: "extract information", role: "Trích lọc / rút trích dữ liệu" },
+          { word: "conditions / criteria", role: "Các mệnh đề điều kiện (WHERE...)" }
+        ],
+        exp: "ĐÚNG. Đây là định nghĩa chính xác về chức năng truy vấn (Query) của DBMS." 
+      },
+      { 
+        id: 5, text: "A database query function allows you to extract information according to certain conditions or criteria.", ans: "T", 
+        trans: "Hàm truy vấn cơ sở dữ liệu cho phép bạn trích xuất thông tin theo những điều kiện hoặc tiêu chí nhất định.",
+        keywords: [
+          { word: "extract according to conditions", role: "Lọc thông tin dựa trên tiêu chí đặt trước" }
+        ],
+        exp: "ĐÚNG (Câu hỏi lặp lại trong đề cương để khắc sâu bản chất của Query)." 
+      },
+      { 
+        id: 6, text: "A field is a group of records holding large amount of information.", ans: "F", 
+        trans: "Một trường (field) là một nhóm các bản ghi (records) chứa một lượng lớn thông tin.",
+        keywords: [
+          { word: "field = group of records", role: "Từ khóa BẪY SAI! (Đảo ngược khái niệm)" },
+          { word: "Table / File", role: "Bảng/Tệp mới là tập hợp của nhiều bản ghi" }
+        ],
+        exp: "SAI vì khái niệm bị đảo ngược. Field (Trường) chỉ là một cột thuộc tính đơn lẻ. Một File hoặc Table mới là tập hợp của các Record." 
+      },
+      { 
+        id: 7, text: "A LAN connects computers in an office building, school, over a relatively long distance.", ans: "F", 
+        trans: "Mạng LAN kết nối các máy tính trong một tòa nhà văn phòng, trường học, qua một khoảng cách tương đối xa.",
+        keywords: [
+          { word: "long distance", role: "Từ khóa BẪY SAI! (Khoảng cách xa)" },
+          { word: "short distance", role: "Bản chất của LAN (Local) là cự ly gần" }
+        ],
+        exp: "SAI ở cụm từ 'long distance'. Mạng cục bộ (Local Area Network) chỉ phục vụ trong phạm vi ngắn (short distance)." 
+      },
+      { 
+        id: 8, text: "A mainframe computer is less powerful than a PC.", ans: "F", 
+        trans: "Máy tính lớn (mainframe) có sức mạnh kém hơn một máy tính cá nhân (PC).",
+        keywords: [
+          { word: "less powerful", role: "Từ khóa BẪY SAI! (Kém mạnh mẽ hơn)" },
+          { word: "Mainframe vs PC", role: "Mainframe xử lý hàng triệu giao dịch, mạnh hơn PC bội phần" }
+        ],
+        exp: "SAI. Mainframe là hệ thống máy tính khổng lồ, mạnh hơn rất nhiều lần so với một PC thông thường." 
+      },
+      { 
+        id: 9, text: "A mainframe computer is more powerful than a PC.", ans: "T", 
+        trans: "Máy tính lớn (mainframe) có sức mạnh vượt trội hơn máy tính cá nhân (PC).",
+        keywords: [
+          { word: "more powerful", role: "Mạnh mẽ hơn, vượt trội hơn" }
+        ],
+        exp: "ĐÚNG. Khẳng định chính xác về tương quan sức mạnh xử lý giữa Mainframe và PC." 
+      },
+      { 
+        id: 10, text: "A mainframe is used by large organizations that need to process great amount of data.", ans: "T", 
+        trans: "Máy tính lớn được sử dụng bởi các tổ chức quy mô lớn cần xử lý một lượng dữ liệu khổng lồ.",
+        keywords: [
+          { word: "large organizations", role: "Các tổ chức, tập đoàn lớn (Ngân hàng, bảo hiểm)" },
+          { word: "great amount of data", role: "Khối lượng dữ liệu khổng lồ" }
+        ],
+        exp: "ĐÚNG. Đây là đối tượng sử dụng và nhiệm vụ cốt lõi của máy tính Mainframe." 
+      },
+      { 
+        id: 11, text: "A mainframe is used by large organizations that need to process small amount of data.", ans: "F", 
+        trans: "Máy tính lớn được sử dụng bởi các tổ chức lớn cần xử lý một lượng dữ liệu nhỏ.",
+        keywords: [
+          { word: "small amount of data", role: "Từ khóa BẪY SAI! (Lượng dữ liệu nhỏ)" }
+        ],
+        exp: "SAI ở chữ 'small amount'. Mainframe sinh ra để xử lý 'great amount' (khối lượng dữ liệu cực lớn)." 
+      },
+      { 
+        id: 12, text: "A MAN is a specialized network that provides access to block-level storage—shared network or cloud storage that, to the user, looks and works like a storage drive that’s physically attached to a computer.", ans: "F", 
+        trans: "MAN là một mạng chuyên dụng cung cấp quyền truy cập vào bộ lưu trữ cấp khối...",
+        keywords: [
+          { word: "MAN (Metropolitan)", role: "Từ khóa BẪY SAI! (Đánh tráo khái niệm)" },
+          { word: "block-level storage", role: "Dấu hiệu nhận biết của mạng lưu trữ SAN (Storage Area Network)" }
+        ],
+        exp: "SAI. Mạng cung cấp 'block-level storage' là SAN (Storage Area Network), còn MAN là mạng đô thị (Metropolitan Area Network)." 
+      },
+      { 
+        id: 13, text: "A Personal Database is an automated or built-in database for such a virtualized environment.", ans: "F", 
+        trans: "Cơ sở dữ liệu cá nhân là một cơ sở dữ liệu được tích hợp sẵn hoặc tự động hóa cho môi trường ảo hóa như vậy.",
+        keywords: [
+          { word: "Personal Database", role: "Từ khóa BẪY SAI!" },
+          { word: "virtualized environment", role: "Định nghĩa của Cloud Database" }
+        ],
+        exp: "SAI. Đây là định nghĩa của CSDL Đám mây (Cloud Database). CSDL cá nhân (Personal Database) chỉ phục vụ cho một máy đơn lẻ." 
+      },
+      { 
+        id: 14, text: "A Personal Digital Assistant is small enough to fit into the palm of your hand.", ans: "T", 
+        trans: "Thiết bị trợ lý kỹ thuật số cá nhân (PDA) đủ nhỏ gọn để nằm vừa vặn trong lòng bàn tay bạn.",
+        keywords: [
+          { word: "PDA", role: "Thiết bị cầm tay trợ lý cá nhân" },
+          { word: "fit into the palm", role: "Nằm gọn trong lòng bàn tay" }
+        ],
+        exp: "ĐÚNG. PDA (tiền thân của smartphone hiện đại) có kích thước bỏ túi nằm gọn trong lòng bàn tay." 
+      },
+      { 
+        id: 15, text: "A VPN establishes an encrypted channel that keeps a user’s identity and access credentials, as well as any data transferred, inaccessible to hackers.", ans: "T", 
+        trans: "VPN thiết lập một đường truyền mã hóa giúp danh tính, thông tin đăng nhập và dữ liệu truyền đi không thể bị tin tặc tiếp cận.",
+        keywords: [
+          { word: "encrypted channel", role: "Kênh truyền được mã hóa bảo vệ" },
+          { word: "inaccessible to hackers", role: "Ngăn chặn tin tặc xâm nhập đánh cắp" }
+        ],
+        exp: "ĐÚNG. Đây là cơ chế bảo mật cốt lõi dạng đường hầm (tunneling) của mạng riêng ảo VPN." 
+      },
+      { 
+        id: 16, text: "A Web Application Firewall (WAF) which updates a threat database in real-time is one of the effective ways to filter application input to protect against code injection.", ans: "T", 
+        trans: "Tường lửa ứng dụng web cập nhật cơ sở dữ liệu mối đe dọa theo thời gian thực là giải pháp hiệu quả lọc đầu vào chống tiêm mã độc.",
+        keywords: [
+          { word: "WAF", role: "Tường lửa bảo vệ lớp ứng dụng web" },
+          { word: "filter application input", role: "Lọc và kiểm duyệt dữ liệu nhập đầu vào" },
+          { word: "protect against code injection", role: "Phòng chống tấn công tiêm mã (SQLi, XSS)" }
+        ],
+        exp: "ĐÚNG. WAF đóng vai trò chốt chặn giám sát và lọc các request độc hại trước khi chạm tới mã nguồn máy chủ." 
+      },
+      { 
+        id: 17, text: "A wireless access point allows wireless devices to connect to the network.", ans: "T", 
+        trans: "Một điểm truy cập không dây (AP) cho phép các thiết bị không dây kết nối vào mạng.",
+        keywords: [
+          { word: "wireless access point (WAP)", role: "Điểm thu phát sóng mạng không dây" },
+          { word: "allows to connect", role: "Cho phép thiết bị kết nối vào LAN" }
+        ],
+        exp: "ĐÚNG. AP là thiết bị trung tâm phát sóng WiFi cho các thiết bị di động gia nhập mạng nội bộ." 
+      },
+      { 
+        id: 18, text: "Animations are placed around pieces of text to tell the web browser how to display text or pictures.", ans: "F", 
+        trans: "Các hoạt ảnh được đặt bao bọc quanh các đoạn văn bản để chỉ cho trình duyệt biết cách hiển thị chữ hoặc ảnh.",
+        keywords: [
+          { word: "Animations", role: "Từ khóa BẪY SAI!" },
+          { word: "placed around pieces of text", role: "Đặc điểm của thẻ HTML (HTML Tags: <tag>...</tag>)" }
+        ],
+        exp: "SAI. Đây là định nghĩa của Thẻ HTML (Tags), không phải định nghĩa của Hoạt ảnh (Animations)." 
+      },
+      { 
+        id: 19, text: "Background means the underlying colors and patterns of a web page.", ans: "T", 
+        trans: "Background có nghĩa là màu sắc và các hoa văn nền nằm phía dưới của một trang web.",
+        keywords: [
+          { word: "underlying colors and patterns", role: "Màu sắc và họa tiết nền bên dưới" }
+        ],
+        exp: "ĐÚNG. Khẳng định chuẩn xác về thành phần Background trong thiết kế web." 
+      },
+      { 
+        id: 20, text: "Centralized Database are the paid versions of the enormous databases, designed for users who wish to access the information for assistance.", ans: "F", 
+        trans: "Cơ sở dữ liệu tập trung là các phiên bản trả phí của các CSDL khổng lồ, dành cho người dùng muốn tra cứu hỗ trợ.",
+        keywords: [
+          { word: "paid versions", role: "Từ khóa BẪY SAI! (Phiên bản trả phí)" },
+          { word: "Centralized Database", role: "CSDL lưu tại 1 máy chủ trung tâm duy nhất" }
+        ],
+        exp: "SAI. Centralized Database là CSDL lưu trữ tập trung tại một vị trí, hoàn toàn không liên quan đến định nghĩa 'phiên bản trả phí'." 
+      },
+      { 
+        id: 21, text: "Digital TV is a way of transmitting pictures by means of digital signals, in contrast to the analogue signals used by traditional TV.", ans: "T", 
+        trans: "Truyền hình kỹ thuật số là phương thức truyền hình ảnh bằng tín hiệu số, trái ngược với tín hiệu tương tự của truyền hình truyền thống.",
+        keywords: [
+          { word: "digital signals", role: "Tín hiệu kỹ thuật số (0 và 1)" },
+          { word: "in contrast to analogue", role: "Tương phản đối lập với sóng analog" }
+        ],
+        exp: "ĐÚNG. Sự khác biệt cốt lõi giữa Digital TV và Analog TV truyền thống." 
+      },
+      { 
+        id: 22, text: "E-mail, telephone, video calling, FAX machine are typically used to transmit information in electronic communication.", ans: "T", 
+        trans: "Email, điện thoại, gọi video, máy FAX thường được dùng để truyền tải thông tin trong truyền thông điện tử.",
+        keywords: [
+          { word: "electronic communication", role: "Các phương tiện liên lạc điện tử" }
+        ],
+        exp: "ĐÚNG. Tất cả các phương tiện liệt kê đều thuộc nhóm phương thức truyền thông số hóa." 
+      },
+      { 
+        id: 23, text: "Hackers are always looking to exploit a private network or system's vulnerabilities so they can steal confidential information and data.", ans: "T", 
+        trans: "Tin tặc luôn tìm cách khai thác các lỗ hổng của mạng riêng hoặc hệ thống để có thể đánh cắp dữ liệu mật.",
+        keywords: [
+          { word: "exploit vulnerabilities", role: "Khai thác lỗ hổng bảo mật" },
+          { word: "steal confidential information", role: "Đánh cắp dữ liệu bí mật" }
+        ],
+        exp: "ĐÚNG. Mô tả đúng về hành vi và mục đích nguy hiểm của tin tặc mạng." 
+      },
+      { 
+        id: 24, text: "Hackers are always trying to attack a private network or system's vulnerabilities so they can steal secret information and data.", ans: "T", 
+        trans: "Tin tặc luôn cố gắng tấn công vào các điểm yếu của hệ thống để đánh cắp thông tin bí mật.",
+        keywords: [
+          { word: "attack vulnerabilities", role: "Tấn công vào điểm yếu hệ thống" }
+        ],
+        exp: "ĐÚNG." 
+      },
+      { 
+        id: 25, text: "Hackers are always trying to attack a private network or system’s vulnerabilities so they can steal secret information and data.", ans: "T", 
+        trans: "Tin tặc luôn cố gắng tấn công vào các điểm yếu của hệ thống để đánh cắp thông tin bí mật.",
+        keywords: [
+          { word: "steal secret data", role: "Chiếm đoạt dữ liệu cơ mật" }
+        ],
+        exp: "ĐÚNG." 
+      },
+      { 
+        id: 26, text: "Hardware is any physical part of the computer which includes the internal components and the external parts like the monitor and printer.", ans: "T", 
+        trans: "Phần cứng là bất kỳ bộ phận vật lý nào của máy tính, gồm linh kiện bên trong và các thiết bị ngoại vi bên ngoài như màn hình, máy in.",
+        keywords: [
+          { word: "physical part", role: "Thành phần vật lý sờ thấy được" },
+          { word: "internal & external", role: "Gồm cả linh kiện trong thùng máy và ngoại vi" }
+        ],
+        exp: "ĐÚNG. Định nghĩa bao quát và toàn diện về phần cứng máy tính (Hardware)." 
+      },
+      { 
+        id: 27, text: "If you want to protect your PC, don’t open email attachments from strangers and take care when downloading files from the Web.", ans: "T", 
+        trans: "Nếu muốn bảo vệ máy tính, đừng mở tệp đính kèm email từ người lạ và hãy cẩn trọng khi tải các tệp tin từ Internet.",
+        keywords: [
+          { word: "don't open email attachments", role: "Không mở tệp đính kèm lạ (phòng tránh Phishing/Malware)" }
+        ],
+        exp: "ĐÚNG. Đây là nguyên tắc bảo đảm an toàn thông tin cơ bản cho người dùng máy tính." 
+      },
+      { 
+        id: 28, text: "If you want to send instant messages on Facebook Messenger, Whatsapp or Snapchat, you will be charged a large amount of fee.", ans: "F", 
+        trans: "Nếu bạn muốn gửi tin nhắn tức thời trên Messenger, Whatsapp hay Snapchat, bạn sẽ bị tính một khoản phí rất lớn.",
+        keywords: [
+          { word: "large amount of fee", role: "Từ khóa BẪY SAI! (Tính phí rất đắt)" },
+          { word: "Instant Messaging = Free", role: "Nhắn tin qua Internet là hoàn toàn miễn phí" }
+        ],
+        exp: "SAI ở cụm từ 'charged a large amount of fee'. Tin nhắn trên các ứng dụng OTT này đều hoàn toàn miễn phí." 
+      },
+      { 
+        id: 29, text: "If your computer is attacked by ransomware, you don’t have to pay any ransom to unlock your screen and your files.", ans: "F", 
+        trans: "Nếu máy tính của bạn bị ransomware tấn công, bạn không cần phải trả bất kỳ khoản tiền chuộc nào để mở khóa màn hình và tệp.",
+        keywords: [
+          { word: "don't have to pay ransom", role: "Từ khóa BẪY SAI! (Không cần trả tiền chuộc)" },
+          { word: "Ransomware = Tống tiền", role: "Bản chất của mã độc này là bắt trả tiền chuộc" }
+        ],
+        exp: "SAI vì bản chất của Ransomware là mã hóa dữ liệu và ép nạn nhân PHẢI trả tiền chuộc (ransom) mới mở khóa." 
+      },
+      { 
+        id: 30, text: "In a star bus network, each node is connected to its left in a circle.", ans: "F", 
+        trans: "Trong mạng star bus, mỗi nút được nối với nút bên trái của nó thành một vòng tròn.",
+        keywords: [
+          { word: "star bus", role: "Từ khóa BẪY SAI!" },
+          { word: "connected in a circle", role: "Đặc điểm của mạng hình vòng (Ring Network)" }
+        ],
+        exp: "SAI. Mạng nối liên tiếp tạo thành một vòng tròn khép kín là Ring Topology (Mạng hình vòng), không phải Star bus." 
+      },
+      { 
+        id: 31, text: "In distribution database, the data is stored centrally and user from various locations can access this data.", ans: "F", 
+        trans: "Trong CSDL phân tán, dữ liệu được lưu trữ tập trung tại một nơi và người dùng từ nhiều địa điểm có thể truy cập.",
+        keywords: [
+          { word: "distribution database", role: "Từ khóa BẪY SAI!" },
+          { word: "stored centrally", role: "Định nghĩa của CSDL tập trung (Centralized Database)" }
+        ],
+        exp: "SAI. Dữ liệu lưu tập trung ở một vị trí là Centralized Database. CSDL phân tán (Distributed) phải lưu ở nhiều trạm khác nhau." 
+      },
+      { 
+        id: 32, text: "Instant message is a kind of service that allows people to send short message for free.", ans: "T", 
+        trans: "Tin nhắn tức thời là một dạng dịch vụ cho phép mọi người gửi tin nhắn ngắn hoàn toàn miễn phí.",
+        keywords: [
+          { word: "short message for free", role: "Tin nhắn văn bản ngắn miễn phí qua mạng" }
+        ],
+        exp: "ĐÚNG. Đây là định nghĩa chuẩn của dịch vụ Instant Messaging (IM)." 
+      },
+      { 
+        id: 33, text: "Instant messages are sent for free over the internet and can contain multimedia items like emoji, pictures, videos and voice recordings.", ans: "T", 
+        trans: "Tin nhắn tức thời được gửi miễn phí qua internet và có thể chứa các nội dung đa phương tiện như biểu cảm, ảnh, video và ghi âm.",
+        keywords: [
+          { word: "multimedia items", role: "Dữ liệu đa phương tiện (emoji, ảnh, video, audio)" }
+        ],
+        exp: "ĐÚNG. IM hiện đại hỗ trợ đầy đủ các định dạng truyền thông đa phương tiện số." 
+      },
+      { 
+        id: 34, text: "Instant messages are sent for free over the internet and can contain multimedia items like emoji, pictures, videos and voice recordings.", ans: "T", 
+        trans: "Tin nhắn tức thời được gửi miễn phí qua internet và có thể chứa các nội dung đa phương tiện...",
+        keywords: [
+          { word: "free over the internet", role: "Miễn phí trên nền tảng Internet" }
+        ],
+        exp: "ĐÚNG (Câu lặp lại trong đề cương nhằm củng cố kiến thức)." 
+      },
+      { 
+        id: 35, text: "Malware attack is malicious software that changes a browser's behavior, settings, or appearance without user consent.", ans: "F", 
+        trans: "Tấn công mã độc là phần mềm độc hại tự ý thay đổi hành vi, cài đặt hoặc giao diện của trình duyệt mà không được phép.",
+        keywords: [
+          { word: "Malware attack", role: "Từ khóa BẪY SAI! (Khái niệm quá rộng)" },
+          { word: "changes browser's behavior", role: "Định nghĩa hẹp riêng của Browser Hijacker" }
+        ],
+        exp: "SAI. Đây là định nghĩa cụ thể của Kẻ chiếm quyền trình duyệt (Browser Hijacker), không phải định nghĩa tổng quát của Malware Attack." 
+      },
+      { 
+        id: 36, text: "MANs are typically bigger than LANs but smaller and WANs.", ans: "T", 
+        trans: "Mạng đô thị (MAN) thường lớn hơn mạng cục bộ (LAN) nhưng nhỏ hơn mạng diện rộng (WAN).",
+        keywords: [
+          { word: "LAN < MAN < WAN", role: "Quy tắc so sánh phạm vi địa lý chuẩn của mạng" }
+        ],
+        exp: "ĐÚNG về mặt bản chất mạng máy tính (dù đề gốc có lỗi chính tả nhỏ 'smaller and WANs' thay cho 'smaller than WANs')." 
+      },
+      { 
+        id: 37, text: "Meta tag is invisible information (e.g. a hidden keyword) on a website.", ans: "T", 
+        trans: "Meta tag là thông tin vô hình (ví dụ từ khóa ẩn) nằm trên một trang web.",
+        keywords: [
+          { word: "invisible information", role: "Thông tin ẩn đối với người xem bình thường" },
+          { word: "Meta tag", role: "Thẻ mô tả dữ liệu cho cỗ máy tìm kiếm SEO" }
+        ],
+        exp: "ĐÚNG. Thẻ meta nằm trong phần <head>, không hiển thị trực tiếp lên giao diện trang web." 
+      },
+      { 
+        id: 38, text: "Neural networks are used to convert handwritten characters into digital characters that a machine can recognize.", ans: "T", 
+        trans: "Mạng nơ-ron được dùng để chuyển đổi các ký tự viết tay thành các ký tự số mà máy móc có thể nhận diện được.",
+        keywords: [
+          { word: "handwritten into digital", role: "Nhận dạng chữ viết tay số hóa (OCR)" },
+          { word: "machine can recognize", role: "Máy tính đọc và hiểu được" }
+        ],
+        exp: "ĐÚNG. Nhận diện chữ viết tay và hình ảnh là ứng dụng kinh điển của mạng nơ-ron nhân tạo." 
+      },
+      { 
+        id: 39, text: "Peripherals are the physical units attached to the computer. They include storage devices and input/output devices.", ans: "T", 
+        trans: "Thiết bị ngoại vi là các đơn vị vật lý được gắn vào máy tính. Chúng bao gồm thiết bị lưu trữ và thiết bị nhập/xuất.",
+        keywords: [
+          { word: "physical units attached", role: "Các thiết bị vật lý kết nối ngoài" },
+          { word: "storage & input/output", role: "Gồm ổ cứng ngoài, chuột, bàn phím, màn hình" }
+        ],
+        exp: "ĐÚNG. Đây là định nghĩa và phân loại chính xác của thiết bị ngoại vi (Peripherals)." 
+      },
+      { 
+        id: 40, text: "Phishing is a cyber-attack in which phishing emails are sent to gather users’ login information.", ans: "T", 
+        trans: "Phishing là một cuộc tấn công mạng, trong đó các email lừa đảo được gửi đi nhằm thu thập thông tin đăng nhập của người dùng.",
+        keywords: [
+          { word: "phishing emails", role: "Thư điện tử giả mạo lừa đảo" },
+          { word: "gather login information", role: "Chiếm đoạt tài khoản, mật khẩu" }
+        ],
+        exp: "ĐÚNG. Tấn công giả mạo (Phishing) chủ yếu dùng email dụ nạn nhân nhập tài khoản/mật khẩu vào web giả." 
+      },
+      { 
+        id: 41, text: "Private networks can’t be attacked by intruders who attempt to obtain information such as Social Security numbers, bank accounts or research and business reports.", ans: "F", 
+        trans: "Các mạng riêng không thể bị tấn công bởi những kẻ xâm nhập mưu toan đánh cắp số an sinh xã hội, tài khoản ngân hàng...",
+        keywords: [
+          { word: "can't be attacked", role: "Từ khóa BẪY SAI! (Không thể bị tấn công)" },
+          { word: "vulnerabilities", role: "Mạng nội bộ nếu có lỗ hổng đều có thể bị hack" }
+        ],
+        exp: "SAI ở từ 'can't be attacked'. Bất kỳ mạng nội bộ hay mạng riêng nào cũng đều có nguy cơ bị tấn công nếu tồn tại lỗ hổng bảo mật." 
+      },
+      { 
+        id: 42, text: "Relational database is the database which is made up of related files.", ans: "T", 
+        trans: "Cơ sở dữ liệu quan hệ là cơ sở dữ liệu được tạo thành từ các tệp/bảng có mối liên hệ mật thiết với nhau.",
+        keywords: [
+          { word: "relational database", role: "Cơ sở dữ liệu quan hệ (RDBMS)" },
+          { word: "related files/tables", role: "Các bảng liên kết khóa chính - khóa ngoại" }
+        ],
+        exp: "ĐÚNG. Mô hình quan hệ tổ chức dữ liệu thành các bảng có mối liên hệ logic với nhau." 
+      },
+      { 
+        id: 43, text: "Systems Administrators, Network Administrators, or anyone who has anything to do with cybersecurity will also be under a great deal of stress.", ans: "T", 
+        trans: "Quản trị viên hệ thống, quản trị mạng, hoặc bất kỳ ai làm việc liên quan đến an ninh mạng đều sẽ chịu rất nhiều căng thẳng.",
+        keywords: [
+          { word: "cybersecurity", role: "Lĩnh vực an ninh mạng trực chiến" },
+          { word: "great deal of stress", role: "Áp lực công việc phòng vệ rất cao" }
+        ],
+        exp: "ĐÚNG. Nhân sự an ninh thông tin luôn phải đối phó liên tục với các nguy cơ tấn công mạng 24/7." 
+      },
+      { 
+        id: 44, text: "Tech professionals are not required to constantly keep themselves up-to-date on the latest trends and developments.", ans: "F", 
+        trans: "Các chuyên gia công nghệ không cần phải liên tục cập nhật các xu hướng và sự phát triển mới nhất.",
+        keywords: [
+          { word: "not required", role: "Từ khóa BẪY SAI! (Không bắt buộc)" },
+          { word: "up-to-date", role: "Ngành CNTT bắt buộc phải cập nhật kiến thức liên tục" }
+        ],
+        exp: "SAI ở chữ 'not required'. Người làm công nghệ bắt buộc phải học tập liên tục để không bị tụt hậu trước sự phát triển nhanh chóng." 
+      },
+      { 
+        id: 45, text: "Thanks to electronic communication, mobile phones now let you check your email, browse the Web and connect with home or company intranets, all without wire.", ans: "T", 
+        trans: "Nhờ truyền thông điện tử, điện thoại di động nay cho phép bạn kiểm tra email, duyệt web và kết nối mạng nội bộ công ty không cần dây dẫn.",
+        keywords: [
+          { word: "browse web, check email", role: "Duyệt web, check mail mọi lúc mọi nơi" },
+          { word: "without wire", role: "Kết nối hoàn toàn không dây (Wireless)" }
+        ],
+        exp: "ĐÚNG. Phản ánh đúng tiện ích vượt bậc của truyền thông điện tử di động." 
+      },
+      { 
+        id: 46, text: "The analysis of large-size, unstructured information can’t be done very efficiently on several cloud virtual servers.", ans: "F", 
+        trans: "Việc phân tích dữ liệu phi cấu trúc dung lượng lớn không thể được thực hiện hiệu quả trên nhiều máy chủ ảo đám mây.",
+        keywords: [
+          { word: "can't be done efficiently", role: "Từ khóa BẪY SAI! (Không thể làm hiệu quả)" },
+          { word: "cloud virtual servers", role: "Đám mây là giải pháp mạnh nhất xử lý Big Data" }
+        ],
+        exp: "SAI ở chữ 'can't be done'. Điện toán đám mây với cụm máy chủ ảo hóa chính là giải pháp tối ưu nhất để phân tích dữ liệu lớn." 
+      },
+      { 
+        id: 47, text: "The connection between devices of WLAN and LAN are the same.", ans: "F", 
+        trans: "Phương thức kết nối giữa các thiết bị của WLAN và LAN là hoàn toàn giống nhau.",
+        keywords: [
+          { word: "are the same", role: "Từ khóa BẪY SAI! (Giống nhau)" },
+          { word: "WLAN vs LAN", role: "WLAN dùng sóng vô tuyến (Wireless), LAN dùng cáp mạng (Ethernet)" }
+        ],
+        exp: "SAI. Phương thức truyền tín hiệu vật lý khác hẳn nhau: WLAN dùng sóng vô tuyến (radio waves), còn LAN truyền thống dùng dây cáp mạng." 
+      },
+      { 
+        id: 48, text: "The network starts with an input layer that receives output in the form of data.", ans: "F", 
+        trans: "Mạng lưới bắt đầu bằng một tầng đầu vào, nơi tiếp nhận đầu ra dưới dạng dữ liệu.",
+        keywords: [
+          { word: "input layer receives output", role: "Từ khóa BẪY SAI! (Nghịch lý logic)" },
+          { word: "input layer", role: "Tầng đầu vào chỉ tiếp nhận Input" }
+        ],
+        exp: "SAI vì mâu thuẫn khái niệm: Tầng đầu vào (Input layer) phải nhận 'input' (dữ liệu vào), không thể tiếp nhận 'output' (kết quả đầu ra)." 
+      },
+      { 
+        id: 49, text: "Vlogging and Blogging are similar in delivering informal styles, however, with Vlogging, Vloggers can post videos.", ans: "T", 
+        trans: "Vlogging và Blogging tương tự nhau về phong cách gần gũi, tuy nhiên với Vlogging, người làm vlog có thể đăng tải các video.",
+        keywords: [
+          { word: "Vlogging can post videos", role: "Vlog truyền tải bằng video thay vì chỉ bài viết" }
+        ],
+        exp: "ĐÚNG. Sự khác biệt đặc trưng nhất của Vlogging so với Blogging truyền thống là định dạng video." 
+      },
+      { 
+        id: 50, text: "VOIP allows voice and multimedia data to be transferred across a data network.", ans: "T", 
+        trans: "VOIP cho phép truyền dữ liệu giọng nói và đa phương tiện qua hạ tầng mạng dữ liệu.",
+        keywords: [
+          { word: "VOIP (Voice over IP)", role: "Thoại trên giao thức mạng Internet" },
+          { word: "voice & multimedia over data network", role: "Truyền âm thanh và dữ liệu qua mạng IP" }
+        ],
+        exp: "ĐÚNG. Đây là định nghĩa và cơ chế hoạt động cốt lõi của công nghệ VOIP." 
+      }
     ];
 
     let correctCount = 0;
@@ -1135,7 +1528,7 @@
     }
 
     // ==========================================
-    // RENDER PHẦN 1: CÓ PHÂN TÍCH TỪ KHÓA MẤU CHỐT (KEYWORDS)
+    // RENDER PHẦN 1
     // ==========================================
     function renderPart1() {
       const container = document.getElementById('part1Container');
@@ -1167,7 +1560,6 @@
           </button>
         `).join('');
 
-        // Sinh danh sách từ khóa mấu chốt
         let keywordsHTML = item.keywords.map(kw => `
           <span class="inline-flex items-center gap-1.5 bg-amber-100/80 text-amber-900 border border-amber-300 px-2.5 py-1 rounded-lg text-xs font-medium">
             <i class="fa-solid fa-key text-amber-600 text-[10px]"></i>
@@ -1189,7 +1581,6 @@
             </button>
           </div>
 
-          <!-- Bảng phân tích dịch nghĩa & Keyword mấu chốt -->
           <div id="p1-trans-${item.id}" class="hidden mb-4 p-4 bg-gradient-to-br from-amber-50 to-orange-50/60 border border-amber-200 rounded-xl text-xs space-y-3 animate-pop">
             <div>
               <p class="font-bold text-amber-950 text-xs flex items-center gap-1.5 mb-1">
@@ -1255,7 +1646,7 @@
     }
 
     // ==========================================
-    // RENDER PHẦN 2: CÓ PHÂN TÍCH TỪ GỢI Ý DẪN ĐƯỜNG (CLUE KEYWORDS)
+    // RENDER PHẦN 2
     // ==========================================
     function renderPart2() {
       const container = document.getElementById('part2Container');
@@ -1288,7 +1679,6 @@
           </button>
         `).join('');
 
-        // Sinh danh sách từ dẫn đường trong đề bài
         let cluesHTML = item.clues.map(c => `
           <span class="inline-flex items-center gap-1.5 bg-emerald-100/80 text-emerald-900 border border-emerald-300 px-2.5 py-1 rounded-lg text-xs font-medium">
             <i class="fa-solid fa-quote-left text-emerald-600 text-[10px]"></i>
@@ -1307,7 +1697,6 @@
             </button>
           </div>
 
-          <!-- Khối dịch toàn bộ câu và từ dẫn đường -->
           <div id="p2-trans-${item.id}" class="hidden p-4 bg-gradient-to-br from-emerald-50 to-teal-50/60 border border-emerald-200 rounded-xl text-xs space-y-3 animate-pop">
             <div>
               <p class="font-bold text-emerald-950 text-xs flex items-center gap-1.5 mb-1">
@@ -1336,12 +1725,10 @@
             ${item.post}
           </div>
 
-          <!-- Chế độ trắc nghiệm -->
           <div id="p2-mcq-${item.id}" class="${isP2MultipleChoice ? 'grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1' : 'hidden'}">
             ${mcqHTML}
           </div>
 
-          <!-- Chế độ gõ từ -->
           <div id="p2-inputmode-${item.id}" class="${isP2MultipleChoice ? 'hidden' : 'flex flex-wrap items-center gap-2 pt-1'}">
             <input 
               type="text" 
@@ -1464,7 +1851,7 @@
     }
 
     // ==========================================
-    // RENDER PHẦN 3: TRUE / FALSE
+    // RENDER PHẦN 3: NÂNG CẤP DỊCH & PHÂN TÍCH TỪ MẤU CHỐT / BẪY
     // ==========================================
     function renderPart3() {
       const container = document.getElementById('part3Container');
@@ -1474,9 +1861,44 @@
         const card = document.createElement('div');
         card.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-200 transition duration-200 hover:shadow-md";
         card.id = `p3-card-${item.id}`;
+
+        let keywordsHTML = item.keywords.map(kw => `
+          <span class="inline-flex items-center gap-1.5 bg-amber-100/90 text-amber-950 border border-amber-300 px-2.5 py-1 rounded-lg text-xs font-medium">
+            <i class="fa-solid fa-bolt text-amber-600 text-[10px]"></i>
+            <span class="font-extrabold underline decoration-amber-500">${kw.word}</span>: <span>${kw.role}</span>
+          </span>
+        `).join('');
+
         card.innerHTML = `
-          <div class="flex items-center gap-2 mb-2">
+          <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
             <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-bold">Câu ${index + 1}</span>
+            <button 
+              type="button" 
+              onclick="toggleP3Trans(${item.id})" 
+              class="text-xs bg-amber-50 hover:bg-amber-100 text-amber-800 px-3 py-1 rounded-lg border border-amber-200 font-bold transition flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-amber-500"></i> Dịch & Phân tích từ mấu chốt
+            </button>
+          </div>
+
+          <!-- Bảng dịch nghĩa và phân tích điểm bẫy mấu chốt -->
+          <div id="p3-trans-${item.id}" class="hidden mb-3 p-4 bg-gradient-to-br from-amber-50 to-orange-50/60 border border-amber-200 rounded-xl text-xs space-y-3 animate-pop">
+            <div>
+              <p class="font-bold text-amber-950 text-xs flex items-center gap-1.5 mb-1">
+                <i class="fa-solid fa-language text-amber-600"></i> Dịch nghĩa câu hỏi:
+              </p>
+              <p class="text-slate-800 bg-white/70 p-2.5 rounded-lg border border-amber-100 leading-relaxed font-medium">
+                ${item.trans}
+              </p>
+            </div>
+
+            <div>
+              <p class="font-bold text-amber-950 text-xs flex items-center gap-1.5 mb-1.5">
+                <i class="fa-solid fa-crosshairs text-amber-600"></i> Từ khóa quyết định & Điểm bẫy (Key Points):
+              </p>
+              <div class="flex flex-wrap gap-2">
+                ${keywordsHTML}
+              </div>
+            </div>
           </div>
 
           <p class="text-sm font-semibold text-slate-800 mb-4 leading-relaxed">${item.text}</p>
@@ -1499,6 +1921,22 @@
           <div id="p3-exp-${item.id}" class="mt-3.5 hidden p-3.5 rounded-xl text-xs font-medium animate-pop"></div>
         `;
         container.appendChild(card);
+      });
+    }
+
+    function toggleP3Trans(id) {
+      document.getElementById(`p3-trans-${id}`).classList.toggle('hidden');
+    }
+
+    let p3AllTransVisible = false;
+    function toggleAllPart3Translations() {
+      p3AllTransVisible = !p3AllTransVisible;
+      part3Data.forEach(item => {
+        const el = document.getElementById(`p3-trans-${item.id}`);
+        if (el) {
+          if (p3AllTransVisible) el.classList.remove('hidden');
+          else el.classList.add('hidden');
+        }
       });
     }
 
@@ -1528,6 +1966,8 @@
         btn.classList.add('wrong-btn');
         expEl.className = "mt-3.5 p-3.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl text-xs font-medium";
         expEl.innerHTML = `<span class="font-extrabold text-rose-950 flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa chính xác (Đáp án đúng là ${item.ans})</span> ${item.exp}`;
+        // Tự động mở bảng dịch & từ khóa bẫy khi làm sai để xem lại ngay
+        document.getElementById(`p3-trans-${id}`).classList.remove('hidden');
         recordAnswer(false);
       }
       expEl.classList.remove('hidden');
